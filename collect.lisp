@@ -160,7 +160,7 @@ Examples:
  See also:
   CL-UTILITIES:WITH-COLLECTORS
   QUUX:WITH-COLLECTORS
-  cl-protobufs/utilities PROTO-IMPL:WITH-COLLECTORS
+  cl-protobufs.utilities PROTO-IMPL:WITH-COLLECTORS
   IT.BESE.ARNESI:WITH-COLLECTORS"
   ;; Note that the performance of this tail collector is better than push/nreverse.
   ;; This is so because we touch each of the conses only once when creating them and appending.
