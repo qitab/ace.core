@@ -2,12 +2,12 @@
 ;;;; Tests for the numbers package.
 ;;;;
 
-(defpackage #:google.core.number-test
+(defpackage #:ace.core.number-test
   (:use #:common-lisp
-        #:google.core.number
-        #:google.test))
+        #:ace.core.number
+        #:ace.test))
 
-(in-package #:google.core.number-test)
+(in-package #:ace.core.number-test)
 
 (defun test-number (expected string &key unsigned-p)
   (let ((actual (read-number-from-string string :unsigned-p unsigned-p)))

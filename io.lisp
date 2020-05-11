@@ -1,10 +1,9 @@
 ;;; Useful abstractions for the file system.
 
 (defpackage #:ace.core.io
-  (:nicknames #:google.core.io)
   (:use #:common-lisp
-        #:google.core.defun*
-        #:google.core.os)
+        #:ace.core.defun
+        #:ace.core.os)
   (:export
    #:absolute-pathname-p
    #:directory-pathname-p
@@ -60,7 +59,7 @@
 (defvar *temporary-directory* (tmpdir)
   "Contains the pathname for the temporary directory. Reset on each restart. Maybe NIL.")
 
-(defmethod google.core.hook:at-restart reset-tmpdir ()
+(defmethod ace.core.hook:at-restart reset-tmpdir ()
   (setf *temporary-directory* (tmpdir)))
 
 (defun* call-with-temporary-file (function &key

@@ -1,7 +1,6 @@
 ;; Package provides rudimentary OS related functionality.
 
 (defpackage :ace.core.os
-  (:nicknames #:google.core.os)
   (:use :cl :ace.core.defun)
   (:export
    #:getenv

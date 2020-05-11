@@ -3,11 +3,10 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.list
-  (:nicknames #:google.core.list)
   (:use #:common-lisp
         #:ace.core.once-only
         #:ace.core.defun
-        #:google.core.collect)
+        #:ace.core.collect)
   (:import-from #:ace.core.macro
                 ace.core.macro:find-type-declaration
                 ace.core.macro:with-gensyms
@@ -54,7 +53,7 @@
    #:unionf
    #:intersectionf))
 
-(cl:in-package #:google.core.list)
+(cl:in-package #:ace.core.list)
 
 (deftype position () "Position on the list." `(integer 0 ,array-dimension-limit))
 (deftype position* () "Position on the list or NIL." '(or position null))

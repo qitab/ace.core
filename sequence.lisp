@@ -2,7 +2,6 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.sequence
-  (:nicknames #:google.core.sequence)
   (:use #:common-lisp)
   (:export
    ;; TODO(czak): Those may be interesting when defined for generic sequences.

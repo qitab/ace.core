@@ -2,13 +2,13 @@
 ;;;; Tests the type utilities.
 ;;;;
 
-(defpackage #:google.core.type-test
+(defpackage #:ace.core.type-test
   (:use #:common-lisp
         #:ace.core
-        #:google.core.type
-        #:google.test))
+        #:ace.core.type
+        #:ace.test))
 
-(in-package :google.core.type-test)
+(in-package :ace.core.type-test)
 
 (deftype fx () 'fixnum)
 (deftype u3 () '(unsigned-byte 3))

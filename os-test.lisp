@@ -1,11 +1,11 @@
-;;; Test for #:google.core.os.
+;;; Test for #:ace.core.os.
 
-(defpackage #:google.core.os-test
+(defpackage #:ace.core.os-test
   (:use #:common-lisp
-        #:google.core.os
-        #:google.test))
+        #:ace.core.os
+        #:ace.test))
 
-(in-package #:google.core.os-test)
+(in-package #:ace.core.os-test)
 
 (deftest cwd-test ()
   (expect (equal (namestring *default-pathname-defaults*) (cwd))))

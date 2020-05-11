@@ -2,12 +2,12 @@
 ;;;; Test for macro helpers
 ;;;;
 
-(google.core.package:defpackage* #:google.core.symbol-test
+(ace.core.package:defpackage* #:ace.core.symbol-test
   (:use #:common-lisp
-        #:google.test)
-  (:use-alias (#:symbol #:google.core.symbol)))
+        #:ace.test)
+  (:use-alias (#:symbol #:ace.core.symbol)))
 
-(in-package #:google.core.symbol-test)
+(in-package #:ace.core.symbol-test)
 
 (deftest cat-test ()
   (let ((*package* (symbol-package 'cat-test)))

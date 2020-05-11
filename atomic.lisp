@@ -9,7 +9,6 @@
 ;;; TODO(czak): Replace stuff in //lisp/parallel:atomic
 
 (defpackage #:ace.core.atomic
-  (:nicknames #:google.core.atomic)
   (:use #:cl
         #:ace.core
         #:ace.core.defun
@@ -49,7 +48,7 @@
            #:barrier
            #:array-cas/word))
 
-(in-package #:google.core.atomic)
+(in-package #:ace.core.atomic)
 
 (defmacro incf (place &optional (n 1) &environment env)
   "Increment PLACE atomically by N. Return old value."
@@ -149,8 +148,8 @@ set it to an OR value made of CLAUSES."
   :overwrite-fndb-silently t)
 
 #+sbcl sb-vm::
-(define-vop (google.core.atomic::%array-cas/word)
-  (:translate google.core.atomic::%array-cas/word)
+(define-vop (ace.core.atomic::%array-cas/word)
+  (:translate ace.core.atomic::%array-cas/word)
   (:policy :fast-safe)
   (:args (array :scs (descriptor-reg) :to :eval)
          (index :scs (any-reg) :to :result)

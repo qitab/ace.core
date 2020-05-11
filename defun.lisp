@@ -2,8 +2,6 @@
 ;;;
 
 (defpackage #:ace.core.defun
-  ;; TODO(czak): Remove nickname. Rename file.
-  (:nicknames #:google.core.defun*)
   (:use #:cl
         #:ace.core
         #:ace.core.macro

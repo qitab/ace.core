@@ -1,14 +1,14 @@
 ;;;;
-;;;; Tests for the google.core.vector package.
+;;;; Tests for the ace.core.vector package.
 ;;;;
 
 
-(google.core.package:defpackage* #:google.core.vector-test
+(ace.core.package:defpackage* #:ace.core.vector-test
   (:use #:common-lisp
-        #:google.test)
-  (:use-alias #:google.core.vector))
+        #:ace.test)
+  (:use-alias #:ace.core.vector))
 
-(in-package #:google.core.vector-test)
+(in-package #:ace.core.vector-test)
 
 (deftest test-make-empty ()
   (expect (zerop (length (vector:make-empty 'fixnum))))

@@ -1,12 +1,11 @@
 ;;; Utilities dealing with strings and characters.
 ;;; The symbols in this package are designed to be used the package prefix.
-;;; Use the GOOGLE.CORE namespace for simple syntax.
+;;; Use the ACE.CORE namespace for simple syntax.
 ;;;
 
 ;;; TODO(czak): Unify the libraries across google3/lisp and travel/qpx.
 
 (defpackage #:ace.core.string
-  (:nicknames #:google.core.string)
   (:use #:common-lisp
         #:ace.core.defun
         #:ace.core.once-only)
@@ -17,7 +16,7 @@
                 #:without-code-deletion-notes
                 #:eval*)
   (:import-from #:ace.core.vector #:index #:size #:with-vector)
-  (:import-from #:google.core.collect #:with-collected-values)
+  (:import-from #:ace.core.collect #:with-collected-values)
   (:export
    #:designator
    #:cat
@@ -37,7 +36,7 @@
    #:hash ; TODO(czak): Implement.
    #:read-as-keyword
    #:read-as-keyword-error
-   ;; Also exported from the GOOGLE.CORE namespace.
+   ;; Also exported from the ACE.CORE namespace.
    #:end-of-token-p
    #:base-char-p
    #:whitespacep))

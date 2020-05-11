@@ -2,12 +2,12 @@
 ;;;; Test for defglobal.
 ;;;;
 
-(cl:defpackage #:google.core.etc-test
+(cl:defpackage #:ace.core.etc-test
   (:use #:common-lisp
-        #:google.core.etc
-        #:google.test))
+        #:ace.core.etc
+        #:ace.test))
 
-(cl:in-package #:google.core.etc-test)
+(cl:in-package #:ace.core.etc-test)
 
 (defglobal* *global* 10)
 

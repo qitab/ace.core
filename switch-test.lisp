@@ -2,12 +2,12 @@
 ;;;; Tests the switch utility.
 ;;;;
 
-(defpackage #:google.core.switch-test
+(defpackage #:ace.core.switch-test
   (:use #:common-lisp
-        #:google.core.switch
-        #:google.test))
+        #:ace.core.switch
+        #:ace.test))
 
-(in-package :google.core.switch-test)
+(in-package :ace.core.switch-test)
 
 (defvar *red* "RED")
 (defvar *blue* "BLUE")

@@ -9,9 +9,9 @@
 ;;; The operations are optimized unless the code is compiled with the DBG feature.
 ;;;
 
-(cl:defpackage #:google.core.fx
-  (:use #:google.core.defun*
-        #:google.core.fast-ops)
+(cl:defpackage #:ace.core.fx
+  (:use #:ace.core.defun
+        #:ace.core.fast-ops)
   (:import-from
    :cl
    cl:fixnum cl:integer
@@ -38,7 +38,7 @@
 
    #:ash #:ashf #:ash*))
 
-(cl:in-package #:google.core.fx)
+(cl:in-package #:ace.core.fx)
 
 ;;; Compile the operations without safety unless in the debug build.
 #-dbg (declaim (optimize (speed 3) (safety 0) (debug 0)))

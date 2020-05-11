@@ -5,7 +5,6 @@
 
 ;; TODO(czak): Change this package to be used as alias prefixed package.
 (defpackage #:ace.core.thread
-  (:nicknames #:google.core.thread)
   (:use #:common-lisp
         #:ace.core.defun
         #:ace.core
@@ -44,7 +43,7 @@
                 sb-sys:allow-with-interrupts
                 sb-sys:with-local-interrupts)
   (:export
-   ;; Also exported from GOOGLE.CORE.
+   ;; Also exported from ACE.CORE.
    #:thread #:threadp
    #:make-thread #:make
    #:thread-name #:name
@@ -491,7 +490,7 @@ there is still possibility that the MUTEX remains locked resulting in an undefin
 
 (defun print-backtraces (&key (stream *debug-io*))
   "Prints the backtraces for all threads to the STREAM."
-  (format stream "~{~&~80~~%~A~&~}" (google.core.thread:backtraces)))
+  (format stream "~{~&~80~~%~A~&~}" (ace.core.thread:backtraces)))
 
 ;;;
 ;;; Stack utilities.

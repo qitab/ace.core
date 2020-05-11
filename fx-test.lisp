@@ -3,12 +3,12 @@
 ;;;; Note that most tests require both the optimized and unoptimized version.
 ;;;;
 
-(google.core.package:defpackage* #:google.core.fx-test
+(ace.core.package:defpackage* #:ace.core.fx-test
   (:use #:common-lisp
-        #:google.test)
-  (:use-alias #:google.core.fx))
+        #:ace.test)
+  (:use-alias #:ace.core.fx))
 
-(cl:in-package #:google.core.fx-test)
+(cl:in-package #:ace.core.fx-test)
 
 ;;;
 ;;; FX operations

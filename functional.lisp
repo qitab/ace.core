@@ -2,7 +2,6 @@
 ;;;
 
 (defpackage #:ace.core.functional
-  (:nicknames #:google.core.function)
   (:use #:common-lisp
         #:ace.core #:ace.core.macro
         #:ace.core.once-only

@@ -5,8 +5,6 @@
 ;;; TODO(czak): Implement portable modular arithmetic.
 
 (defpackage #:ace.core.fast-ops
-  ;; TODO(czak): Remove nicknames.
-  (:nicknames #:google.core.fast-ops)
   (:use #:common-lisp #:ace.core.defun)
   #+sbcl
   (:import-from sb-c sb-c::mask-signed-field)

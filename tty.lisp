@@ -2,11 +2,11 @@
 ;;; Functions related to TTY. E.g. Printing of ANSI escape codes.
 ;;;
 
-(defpackage #:google.core.tty
+(defpackage #:ace.core.tty
   (:use #:common-lisp)
   (:export #:ttyp #:*print-ansi*))
 
-(in-package #:google.core.tty)
+(in-package #:ace.core.tty)
 
 (declaim (boolean *print-ansi*))
 (defvar *print-ansi* nil "If non-nil, the ANSI escapes are printed by ~/ansi/ function.")

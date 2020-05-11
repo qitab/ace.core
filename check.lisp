@@ -19,7 +19,6 @@
    #:missed*))
 
 (defpackage #:ace.core.check
-  (:nicknames #:google.core.assert)
   (:use #:common-lisp #:ace.core
         #:ace.core.check.condition)
   (:import-from #:ace.core.macro
@@ -454,7 +453,7 @@ Parameters:
              :unless (freep arg env) :do
                (let* ((type-info
                        (and (typep type '(and symbol (not boolean)))
-                            (get type 'google.core.type:info)))
+                            (get type 'ace.core.type:info)))
                       (formatter
                        (and type-info (info-format type-info))))
                  (add-binding

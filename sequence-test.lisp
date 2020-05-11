@@ -1,14 +1,14 @@
 ;;;;
-;;;; Tests for the google.list package.
+;;;; Tests for the ace.core.sequence package.
 ;;;;
 
-(google.core.package:defpackage* #:google.core.sequence-test
+(ace.core.package:defpackage* #:ace.core.sequence-test
   (:use #:common-lisp
-        #:google.test
-        #:google.core.sequence)
-  (:use-alias #:google.core.sequence))
+        #:ace.test
+        #:ace.core.sequence)
+  (:use-alias #:ace.core.sequence))
 
-(in-package #:google.core.sequence-test)
+(in-package #:ace.core.sequence-test)
 
 (deftest removef-test ()
   (let* ((c 0)
@@ -43,4 +43,3 @@
       (expect (equal '(2) a))
       (expect (equal '(1 2) %a))
       (expect (= c 1)))))
-

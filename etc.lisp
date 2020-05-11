@@ -2,7 +2,6 @@
 ;;;
 
 (defpackage #:ace.core.etc
-  (:nicknames #:google.core.etc)
   (:use #:common-lisp
         #:ace.core
         #:ace.core.macro

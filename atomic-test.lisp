@@ -1,12 +1,12 @@
 ;;; Tests the atomic utilities.
 ;;;
 
-(ace.core:defpackage* #:google.core.atomic-test
+(ace.core:defpackage* #:ace.core.atomic-test
   (:use #:common-lisp
-        #:google.test)
-  (:use-alias #:google.core.atomic))
+        #:ace.test)
+  (:use-alias #:ace.core.atomic))
 
-(in-package :google.core.atomic-test)
+(in-package :ace.core.atomic-test)
 
 (defstruct foo
   (list nil :type list)

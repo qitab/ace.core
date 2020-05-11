@@ -23,12 +23,12 @@
 
 #+sbcl (require :sb-introspect)
 
-(defsystem google.core
-  :name "Google Lisp Core Libraries"
-  :description "Common utilities used at Google for Lisp and linked into most Google Lisp binaries."
+(defsystem ace.core
+  :name "Ace Lisp Core Libraries"
+  :description "Common utilities used at Ace for Lisp and linked into most Ace Lisp binaries."
   :long-description
-  "The GOOGLE.CORE library contains following modules:
- google.core - is a summary package that can be used as a namespace,
+  "The ACE.CORE library contains following modules:
+ ace.core - is a summary package that can be used as a namespace,
   .macro - a set of utilities for writing macros,
   .type - utilities for dealing with types and declarations,
   .symbol - utilities dealing with symbols,
@@ -48,9 +48,9 @@
   .index-ops - a set of operations acting on array indexes,
   .switch - a family of CASE-like SWITCH macros"
   :version "1.0"
-  :author "Google Lisp Community"
+  :author "Lisp Community"
   :license "TBD."
-  :depends-on (alexandria bordeaux-threads closer-mop trivial-garbage)
+  :depends-on (bordeaux-threads closer-mop trivial-garbage)
   :serial t
   :components
   #.(loop for f in *files* collect `(:file ,f)))

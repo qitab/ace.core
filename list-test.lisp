@@ -1,11 +1,11 @@
 ;;;;
-;;;; Tests for the google.list package.
+;;;; Tests for the ace.core.list package.
 ;;;;
 
-(google.core.package:defpackage* #:ace.core.list-test
+(ace.core.package:defpackage* #:ace.core.list-test
   (:use #:common-lisp
-        #:google.test)
-  (:use-alias #:google.core.list))
+        #:ace.test)
+  (:use-alias #:ace.core.list))
 
 (in-package #:ace.core.list-test)
 

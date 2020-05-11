@@ -1,18 +1,16 @@
 ;;;;
 ;;;; Provides utilities related to the package system.
-;;;; Notably, this file is loaded by default with google.core as
+;;;; Notably, this file is loaded by default with ace.core as
 ;;;; it provides the defpackage* and local package aliases.
 ;;;;
 
 (defpackage #:ace.core.package
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core.package)
   (:use #:cl #:ace.core)
   #-sbcl
   (:import-from #:trivial-garbage
                 #:make-weak-hash-table)
   #-sbcl
-  (:import-from #:google.core.thread
+  (:import-from #:ace.core.thread
                 #:make-mutex
                 #:with-mutex)
   (:export #:defpackage*

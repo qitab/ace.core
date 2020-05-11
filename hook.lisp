@@ -12,11 +12,10 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.hook
-  (:nicknames #:google.core.hook)
   (:use #:cl #:ace.core)
   (:use-alias (#:mop #:closer-mop)
-              #:google.core.list)
-  (:import-from #:google.core.list #:unionf #:nreversef)
+              #:ace.core.list)
+  (:import-from #:ace.core.list #:unionf #:nreversef)
   (:export
    #:define-hook-function
    #:define-hook-method

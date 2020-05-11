@@ -1,13 +1,11 @@
 ;;; Function helping with creating symbols and keywords.
 ;;; The symbols in this package are designed to be referenced with the package prefix.
-;;; Use GOOGLE.CORE namespace for simple syntax
+;;; Use ACE.CORE namespace for simple syntax
 ;;;
 
 ;;; TODO(czak): Unify the libraries across google3/lisp and travel/qpx.
 
 (defpackage #:ace.core.symbol
-  ;; TODO(czak): Remove nicknames.
-  (:nicknames #:google.core.symbol)
   (:use #:cl #:ace.core)
   (:shadow #:format)
   (:export

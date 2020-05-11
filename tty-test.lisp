@@ -2,10 +2,10 @@
 ;;; Test package for TTY package.
 ;;;
 
-(defpackage #:google.core.tty-test
-  (:use #:common-lisp #:google.test #:google.core.tty))
+(defpackage #:ace.core.tty-test
+  (:use #:common-lisp #:ace.test #:ace.core.tty))
 
-(in-package #:google.core.tty-test)
+(in-package #:ace.core.tty-test)
 
 (deftest test-ansi ()
   (format t "~31/ansi/~%" :TEST)

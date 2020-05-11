@@ -6,8 +6,8 @@
   (:use #:common-lisp
         #:ace.core.check
         #:ace.core.defun
-        #:google.test)
-  (:import-from #:google.test.runner #:*failed-conditions*))
+        #:ace.test)
+  (:import-from #:ace.test.runner #:*failed-conditions*))
 
 (in-package #:ace.core.check-test)
 

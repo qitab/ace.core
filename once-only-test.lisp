@@ -4,7 +4,7 @@
   (:use #:common-lisp
         #:ace.core.macro
         #:ace.core.once-only
-        #:google.test)
+        #:ace.test)
   (:import-from #:ace.core.once-only
                 ace.core.once-only::generate-once-only-content))
 

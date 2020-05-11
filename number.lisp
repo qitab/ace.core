@@ -4,8 +4,8 @@
 
 ;;;; TODO(czak): Unify the libraries across google3/lisp and travel/qpx.
 
-(cl:defpackage #:google.core.number
-  (:use #:common-lisp #:google.core.defun*)
+(cl:defpackage #:ace.core.number
+  (:use #:common-lisp #:ace.core.defun)
   #+sbcl
   (:import-from sb-ext
                 sb-ext:single-float-positive-infinity
@@ -14,7 +14,7 @@
                 sb-ext:double-float-negative-infinity
                 sb-ext:float-nan-p)
 
-  (:import-from #:google.core.etc #:defglobal!)
+  (:import-from #:ace.core.etc #:defglobal!)
   (:export #:read-number #:read-number* #:read-number-from-string
            #:read-double #:read-double-from-string
            #:read-float  #:read-float-from-string
@@ -36,7 +36,7 @@
            #:hex-digit-p
            #:fixnump))
 
-(cl:in-package #:google.core.number)
+(cl:in-package #:ace.core.number)
 
 (defun* fixnump (x) (declare (self inline (t) boolean))
   "True if X is a fixnum."

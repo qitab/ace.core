@@ -3,7 +3,7 @@
 
 (ace.core:defpackage* #:ace.core.dx-test
   (:use #:common-lisp
-        #:google.test)
+        #:ace.test)
   (:use-alias #:ace.core.dx))
 
 (in-package :ace.core.dx-test)

@@ -2,17 +2,17 @@
 ;;;; Tests the defun* macro.
 ;;;;
 
-(cl:defpackage #:google.core.defun*-test
+(cl:defpackage #:ace.core.defun-test
   (:use #:common-lisp
-        #:google.core.macro
-        #:google.core.defun*
-        #:google.core.type
-        #:google.test)
-  (:import-from #:google.core.defun*
+        #:ace.core.macro
+        #:ace.core.defun
+        #:ace.core.type
+        #:ace.test)
+  (:import-from #:ace.core.defun
                 #:parse-parameter-list
                 #:parse-self-type-declaration))
 
-(cl:in-package :google.core.defun*-test)
+(cl:in-package :ace.core.defun-test)
 
 
 (defun %param (param)

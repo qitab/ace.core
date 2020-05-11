@@ -1,12 +1,12 @@
-;;; Test for #:google.core.with.
+;;; Test for #:ace.core.with.
 
-(defpackage #:google.core.with-test
+(defpackage #:ace.core.with-test
   (:use #:cl
         #:ace.core
         #:ace.core.with
-        #:google.test))
+        #:ace.test))
 
-(in-package #:google.core.with-test)
+(in-package #:ace.core.with-test)
 
 (defun init (&rest args) (values-list args))
 

@@ -5,7 +5,7 @@
   (:use #:common-lisp
         #:ace.core.functional
         #:ace.core
-        #:google.test)
+        #:ace.test)
   (:import-from #:ace.core.functional
                 ace.core.functional::ftype-declaration
                 ace.core.functional::function-lambda-list

@@ -1,8 +1,6 @@
 ;;; The package allows to simplify Lisp forms in macros.
 
 (defpackage #:ace.core.simplify
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core.simplify)
   (:use #:cl #:ace.core.macro)
   (:export #:simplify))
 

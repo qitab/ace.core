@@ -2,7 +2,6 @@
 ;;;;
 
 (defpackage #:ace.core.collect
-  (:nicknames #:google.core.collect)
   (:use #:common-lisp)
   (:export
    #:with-collectors

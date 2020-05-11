@@ -2,12 +2,12 @@
 ;;;; Test for collectors
 ;;;;
 
-(cl:defpackage #:google.core.collect-test
+(cl:defpackage #:ace.core.collect-test
   (:use #:common-lisp
-        #:google.core.collect
-        #:google.test))
+        #:ace.core.collect
+        #:ace.test))
 
-(cl:in-package #:google.core.collect-test)
+(cl:in-package #:ace.core.collect-test)
 
 (deftest with-collectors-test ()
   (let ((y-init (list 1 2 3)))

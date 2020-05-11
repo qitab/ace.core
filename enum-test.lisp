@@ -2,7 +2,7 @@
 ;;;
 
 (defpackage #:ace.core.enum-test
-  (:use #:cl #:ace.core.enum #:google.test))
+  (:use #:cl #:ace.core.enum #:ace.test))
 
 (in-package #:ace.core.enum-test)
 

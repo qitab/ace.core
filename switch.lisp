@@ -3,8 +3,6 @@
 ;;;;
 
 (defpackage #:ace.core.switch
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core.switch)
   (:use #:cl #:ace.core #:ace.core.macro)
   (:export #:switch #:eswitch #:switch*))
 

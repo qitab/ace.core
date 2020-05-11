@@ -1,9 +1,9 @@
 
-(google.core.package:defpackage* ace.core.hook-test
-  (:use #:cl #:google.test)
-  (:use-alias #:google.core.hook)
+(ace.core.package:defpackage* ace.core.hook-test
+  (:use #:cl #:ace.test)
+  (:use-alias #:ace.core.hook)
   (:import-from #:ace.core.functional #:∘)
-  (:import-from #:google.core.hook
+  (:import-from #:ace.core.hook
                 #:define-hook-function
                 #:define-hook-method
                 #:method-identifier

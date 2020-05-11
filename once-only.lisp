@@ -2,8 +2,6 @@
 ;;;
 
 (defpackage #:ace.core.once-only
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core.once-only)
   (:use #:cl #:ace.core.macro)
   (:export
    #:define-compiler-macro*
@@ -199,7 +197,7 @@ Parameters:
            (list types dynamic-extent inline pvars pinit ksyms kinit rest-init))
   (let (flets ftypes lets let-types dxs inlines (newenv lexenv))
     (labels ((simplify (form)
-               (values (google.core.simplify:simplify form lexenv)))
+               (values (ace.core.simplify:simplify form lexenv)))
              (add-ftype (fn args body)
                (flet ((argtype (arg)
                         (or (car (member arg lambda-list-keywords :test #'eq))

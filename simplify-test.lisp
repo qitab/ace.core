@@ -1,15 +1,15 @@
 ;;; Test for the optimize module.
 ;;;
 
-(defpackage #:google.core.simplify-test
+(defpackage #:ace.core.simplify-test
   (:use #:common-lisp
-        #:google.core.simplify
-        #:google.test)
+        #:ace.core.simplify
+        #:ace.test)
   (:import-from
-   #:google.core.simplify
-   google.core.simplify::folded-form))
+   #:ace.core.simplify
+   ace.core.simplify::folded-form))
 
-(in-package :google.core.simplify-test)
+(in-package :ace.core.simplify-test)
 
 (deftest folded-from-test ()
   (expect (equal '3 (folded-form '(+ 1 2))))

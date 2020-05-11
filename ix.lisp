@@ -2,8 +2,6 @@
 ;;;
 
 (defpackage #:ace.core.ix
-  ;; TODO(czak): Remove nicknames.
-  (:nicknames #:google.core.ix)
   (:import-from #:ace.core.vector #:index)
   (:export
    #:mod #:rem #:truncate #:floor #:ceiling
@@ -22,4 +20,4 @@
 ;;; Compile the operations without safety unless in the debug build.
 #-dbg (cl:declaim (cl:optimize (cl:speed 3) (cl:safety 0) (cl:debug 0)))
 
-(google.core.fast-ops:define-typed-integer-math-functions index "")
+(ace.core.fast-ops:define-typed-integer-math-functions index "")

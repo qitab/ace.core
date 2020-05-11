@@ -1,13 +1,13 @@
-;;; Test for #:google.core.io.
+;;; Test for #:ace.core.io.
 
-(defpackage #:google.core.io-test
+(defpackage #:ace.core.io-test
   (:use #:common-lisp
-        #:google.core.io
-        #:google.core.os
-        #:google.test)
-  (:import-from #:google.core.io #:*temporary-directory*))
+        #:ace.core.io
+        #:ace.core.os
+        #:ace.test)
+  (:import-from #:ace.core.io #:*temporary-directory*))
 
-(in-package #:google.core.io-test)
+(in-package #:ace.core.io-test)
 
 (deftest directory-pathname-p-test ()
   (expect (directory-pathname-p (pathname "/")))

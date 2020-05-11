@@ -3,8 +3,6 @@
 
 (defpackage #:ace.core
   (:use #:cl)
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core)
   (:export
    ;; Symbols for ACE.CORE.PACKAGE.
    #:defpackage*

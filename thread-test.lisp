@@ -1,17 +1,17 @@
 ;;;;
-;;;; Tests for the google.core.thread package.
+;;;; Tests for the ace.core.thread package.
 ;;;;
 
-(defpackage #:google.core.thread-test
+(defpackage #:ace.core.thread-test
   (:use #:common-lisp
-        #:google.core.thread
-        #:google.test)
-  (:import-from #:google.core.thread
-                google.core.thread::holding-mutex-p)
+        #:ace.core.thread
+        #:ace.test)
+  (:import-from #:ace.core.thread
+                ace.core.thread::holding-mutex-p)
   (:import-from #:sb-ext
                 sb-ext:atomic-incf))
 
-(in-package #:google.core.thread-test)
+(in-package #:ace.core.thread-test)
 
 ;; TODO(czak): Investigate if we can use LPARALLEL for this.
 

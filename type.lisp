@@ -5,8 +5,6 @@
 ;;;; TODO(czak): Unify the libraries across google3/lisp and travel/qpx.
 
 (defpackage #:ace.core.type
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core.type)
   (:use #:cl #:ace.core)
   #+sbcl (:import-from #:sb-cltl2 #:variable-information #:function-information)
   #+ccl (:import-from #:ccl #:variable-information #:function-information)

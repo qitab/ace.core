@@ -2,12 +2,12 @@
 ;;;; Tests for the strings package of basic string utilities.
 ;;;;
 
-(cl:defpackage #:google.core.string-test
+(cl:defpackage #:ace.core.string-test
   (:use #:common-lisp
-        #:google.core.string
-        #:google.test)
-  (:import-from #:google.core.collect #:with-collectors)
-  (:import-from #:google.core.string
+        #:ace.core.string
+        #:ace.test)
+  (:import-from #:ace.core.collect #:with-collectors)
+  (:import-from #:ace.core.string
                 ;; For more readable macro-expansion.
                 #:token
                 #:%token-start
@@ -18,7 +18,7 @@
                 #:%start
                 #:%end))
 
-(cl:in-package #:google.core.string-test)
+(cl:in-package #:ace.core.string-test)
 
 ;;;
 ;;; PREFIXP tests

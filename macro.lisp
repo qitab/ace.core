@@ -17,8 +17,6 @@
 ;;;
 
 (defpackage #:ace.core.macro
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core.macro)
   (:use #:cl #:ace.core)
   (:export
    #:1st-or-atom

@@ -1,11 +1,9 @@
 ;;; Utilities related to vectors.
 ;;; The symbols in this package are designed to be used with the package prefix.
-;;; Use the GOOGLE.CORE namespace for simple syntax.
+;;; Use the ACE.CORE namespace for simple syntax.
 ;;;
 
 (ace.core:defpackage* #:ace.core.vector
-  ;; TODO(czak): Remove nickname.
-  (:nicknames #:google.core.vector)
   (:use #:cl #:ace.core)
   #+sbcl
   (:import-from #:sb-ext sb-ext:word)
@@ -99,9 +97,9 @@ If FORCE-INLINE is true, the WITH-VECTOR forms will be inlined."
   :overwrite-fndb-silently t)
 
 #+sbcl sb-vm::
-(define-vop (google.core.vector::%array-prefetch-t0/word)
+(define-vop (ace.core.vector::%array-prefetch-t0/word)
   ;; VOP for PREFETCH TO on word vectors, with a tagged register index.
-  (:translate google.core.vector::%array-prefetch-t0/word)
+  (:translate ace.core.vector::%array-prefetch-t0/word)
   (:policy :fast-safe)
   (:args (array :scs (descriptor-reg) :to :eval)
          (index :scs (any-reg) :to :result))

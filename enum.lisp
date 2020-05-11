@@ -65,12 +65,11 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.enum
-  (:nicknames #:google.core.enum)
   (:use #:common-lisp
         #:ace.core
         #:ace.core.macro
         #:ace.core.etc)
-  (:use-alias #:google.core.symbol)
+  (:use-alias #:ace.core.symbol)
   (:export #:define
            #:numeral
            #:to-keyword

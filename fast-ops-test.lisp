@@ -4,12 +4,12 @@
 ;;; Most of this is tested in fx-test.lisp.
 ;;;
 
-(defpackage #:google.core.fast-ops-test
-  (:use #:cl #:google.test #:google.core.fast-ops)
-  (:import-from #:google.core.fast-ops
-                google.core.fast-ops::%dostack))
+(defpackage #:ace.core.fast-ops-test
+  (:use #:cl #:ace.test #:ace.core.fast-ops)
+  (:import-from #:ace.core.fast-ops
+                ace.core.fast-ops::%dostack))
 
-(in-package #:google.core.fast-ops-test)
+(in-package #:ace.core.fast-ops-test)
 
 (defun my+ (&rest args)
   (declare (dynamic-extent args))

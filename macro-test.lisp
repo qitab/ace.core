@@ -4,7 +4,7 @@
 (defpackage #:ace.core.macro-test
   (:use #:common-lisp
         #:ace.core.macro
-        #:google.test))
+        #:ace.test))
 
 (in-package :ace.core.macro-test)
 
