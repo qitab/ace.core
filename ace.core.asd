@@ -48,7 +48,7 @@
   .switch - a family of CASE-like SWITCH macros"
   :version "1.0"
   :author "Lisp Community"
-  :license "TBD."
+  :license "MIT"
   :depends-on (bordeaux-threads closer-mop trivial-garbage)
   :serial t
   :components
