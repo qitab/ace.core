@@ -1,4 +1,3 @@
-
 (defparameter *files*
   '("macro"
     "type"
