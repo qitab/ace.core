@@ -1,4 +1,4 @@
-# Lisp Test Runner
+# Lisp core libraries
 
 This is a library containing utilities for working with Common Lisp.
 
