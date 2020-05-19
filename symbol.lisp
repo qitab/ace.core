@@ -1,3 +1,9 @@
+;;; Copyright 2020 Google LLC
+;;;
+;;; Use of this source code is governed by an MIT-style
+;;; license that can be found in the LICENSE file or at
+;;; https://opensource.org/licenses/MIT.
+
 ;;; Function helping with creating symbols and keywords.
 ;;; The symbols in this package are designed to be referenced with the package prefix.
 ;;; Use ACE.CORE namespace for simple syntax

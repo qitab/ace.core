@@ -1,3 +1,9 @@
+;;; Copyright 2020 Google LLC
+;;;
+;;; Use of this source code is governed by an MIT-style
+;;; license that can be found in the LICENSE file or at
+;;; https://opensource.org/licenses/MIT.
+
 ;;; Tests for assertion checks.
 ;;;
 ;;; cllint: disable=invalid-assert
@@ -41,22 +47,22 @@
     (expect error)
     (expect
      (string=
-      "[check-test:30] Failed check (TT X :Y Z) with X = #x12, Z = 0."
+      "[check-test:36] Failed check (TT X :Y Z) with X = #x12, Z = 0."
       actual))
 
     (expect error2)
-    (expect (string= "[check-test:32] CHECK FAILED!" actual2))
+    (expect (string= "[check-test:38] CHECK FAILED!" actual2))
 
     (expect error3)
     (expect
      (string=
-      "[check-test:34] Failed check (NOT #1=(/= X Z)) with X = 18, Z = 0, #1# = T."
+      "[check-test:40] Failed check (NOT #1=(/= X Z)) with X = 18, Z = 0, #1# = T."
       actual3))
 
     (expect error4)
     (expect
      (string=
-      "[check-test:36] Failed check (AND X #1=(NOT X) Z) with X = 18, #1# = NIL."
+      "[check-test:42] Failed check (AND X #1=(NOT X) Z) with X = 18, #1# = NIL."
       actual4))))
 
 (deftest test-expect ()

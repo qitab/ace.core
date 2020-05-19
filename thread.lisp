@@ -1,3 +1,9 @@
+;;; Copyright 2020 Google LLC
+;;;
+;;; Use of this source code is governed by an MIT-style
+;;; license that can be found in the LICENSE file or at
+;;; https://opensource.org/licenses/MIT.
+
 ;;;; Utilities related to threads and synchronization.
 ;;;; Uses the implementation detail of bordeaux-threads for make-thread
 ;;;; This package is designed to be used in other packages.

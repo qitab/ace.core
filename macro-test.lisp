@@ -1,3 +1,9 @@
+;;; Copyright 2020 Google LLC
+;;;
+;;; Use of this source code is governed by an MIT-style
+;;; license that can be found in the LICENSE file or at
+;;; https://opensource.org/licenses/MIT.
+
 ;;; Tests the macro utilities.
 ;;;
 
@@ -14,14 +20,14 @@
 
 (deftest line-and-numbers-test ()
   (let ((actual (line-and-column-macro)))
-    (expect (equal '(16 16 16 39) actual))))
+    (expect (equal '(22 16 22 39) actual))))
 
 #+nil foo
 
 (deftest line-and-numbers-test2 ()
   #+nil bar
   (let ((actual (line-and-column-macro)))
-    (expect (equal '(23 16 23 39) actual))))
+    (expect (equal '(29 16 29 39) actual))))
 
 (defparameter *ttt* (line-and-column-macro))
 (defparameter *uuu*
@@ -31,10 +37,10 @@
  (defparameter *www* (line-and-column-macro))
 
 (deftest line-and-columns-top-level ()
-  (expect (equal '(26 20 26 43) *ttt*))
-  (expect (equal '(28 2 28 25) *uuu*))
-  (expect (equal '(30 21 30 44) *vvv*))
-  (expect (equal '(31 21 31 44) *www*)))
+  (expect (equal '(32 20 32 43) *ttt*))
+  (expect (equal '(34 2 34 25) *uuu*))
+  (expect (equal '(36 21 36 44) *vvv*))
+  (expect (equal '(37 21 37 44) *www*)))
 
 (deftest lmap-test ()
   (expect (equal '(2 3 4 5) (lmap (i '(1 2 3 4))

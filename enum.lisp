@@ -1,3 +1,9 @@
+;;; Copyright 2020 Google LLC
+;;;
+;;; Use of this source code is governed by an MIT-style
+;;; license that can be found in the LICENSE file or at
+;;; https://opensource.org/licenses/MIT.
+
 ;;; Definition of the ENUM type. An ENUM is a mapping between keywords and numbers.
 ;;; The symbols in this package are designed to be prefixed with the package prefix.
 ;;;

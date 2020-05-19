@@ -1,3 +1,9 @@
+;;; Copyright 2020 Google LLC
+;;;
+;;; Use of this source code is governed by an MIT-style
+;;; license that can be found in the LICENSE file or at
+;;; https://opensource.org/licenses/MIT.
+
 ;;;;
 ;;;; Tests for the fast ops fixnum package.
 ;;;; Note that most tests require both the optimized and unoptimized version.
