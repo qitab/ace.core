@@ -45,6 +45,14 @@
    #:remove #:remove-if #:remove-if-not
    #:delete #:delete-if #:delete-if-not
    #:delete-adjacent
+
+   #:removef
+   #:removef-if
+   #:removef-if-not
+   #:deletef
+   #:deletef-if
+   #:deletef-if-not
+
    #:partition
    #:npartition
    #:dolist*
@@ -969,6 +977,128 @@ Parameters:
        :from-end from-end :start start :end end :key key :count count))))
 (define-compiler-macro copy-if-not (&whole whole &rest args)
   (apply #'%remove-if-form whole args))
+
+;;;
+;;; Modifying macros.
+;;;
+
+(defmacro removef (item list &rest rest
+                   &key from-end test test-not start end count key
+                   &environment env)
+  "Remove all elements from the LIST that match the ITEM.
+LIST needs to be a place and is assigned the new returned LIST.
+
+The REST parameters are:
+ FROM-END - if true, will start deleting from the end,
+ TEST - the equality test used to compare ITEM with the elements in the list,
+ TEST-NOT - the complement of the TEST,
+ START - the START index (default 0),
+ END - the END index (default is NIL, the end of list),
+ COUNT - the maximum count of elements to be deleted,
+ KEY - a function that derives values to be compared with the ITEM."
+  (declare (ignore from-end test test-not start end count key))
+  (multiple-value-bind (vars vals places setter getter) (get-setf-expansion list env)
+    `(let* (,@(mapcar #'list vars vals)
+            (,(first places) (remove ,item ,getter ,@rest))
+            ,@(rest places))
+       ,setter)))
+
+(defmacro removef-if (predicate list &rest rest
+                      &key from-end start end count key
+                      &environment env)
+  "Remove all elements from the LIST that match the PREDICATE.
+LIST needs to be a place and is assigned the new returned LIST.
+
+The REST parameters are:
+ FROM-END - if true, will start deleting from the end,
+ START - the START index (default 0),
+ END - the END index (default is NIL, the end of list),
+ COUNT - the maximum count of elements to be deleted,
+ KEY - a function that derives values to be tested by the predicate."
+  (declare (ignore from-end start end count key))
+  (multiple-value-bind (vars vals places setter getter) (get-setf-expansion list env)
+    `(let* (,@(mapcar #'list vars vals)
+            (,(first places) (remove-if ,predicate ,getter ,@rest))
+            ,@(rest places))
+       ,setter)))
+
+(defmacro removef-if-not (predicate list &rest rest
+                          &key from-end start end count key
+                          &environment env)
+  "Remove all elements from the LIST that does NOT match the PREDICATE.
+LIST needs to be a place and is assigned the new returned LIST.
+
+The REST parameters are:
+ FROM-END - if true, will start deleting from the end,
+ START - the START index (default 0),
+ END - the END index (default is NIL, the end of list),
+ COUNT - the maximum count of elements to be deleted,
+ KEY - a function that derives values to be tested by the predicate."
+  (declare (ignore from-end start end count key))
+  (multiple-value-bind (vars vals places setter getter) (get-setf-expansion list env)
+    `(let* (,@(mapcar #'list vars vals)
+            (,(first places) (remove-if-not ,predicate ,getter ,@rest))
+            ,@(rest places))
+       ,setter)))
+
+(defmacro deletef (item list &rest rest
+                   &key from-end test test-not start end count key
+                   &environment env)
+  "Destructively delete all elements from the LIST that match the ITEM.
+LIST needs to be a place and is assigned the returned modified LIST.
+
+The REST parameters are:
+ FROM-END - if true, will start deleting from the end,
+ TEST - the equality test used to compare ITEM with the elements in the list,
+ TEST-NOT - the complement of the TEST,
+ START - the START index (default 0),
+ END - the END index (default is NIL, the end of list),
+ COUNT - the maximum count of elements to be deleted,
+ KEY - a function that derives values to be compared with the ITEM."
+  (declare (ignore from-end test test-not start end count key))
+  (multiple-value-bind (vars vals places setter getter) (get-setf-expansion list env)
+    `(let* (,@(mapcar #'list vars vals)
+            (,(first places) (delete ,item ,getter ,@rest))
+            ,@(rest places))
+       ,setter)))
+
+(defmacro deletef-if (predicate list &rest rest
+                      &key from-end start end count key
+                      &environment env)
+  "Destructively delete all elements from the LIST that match the PREDICATE.
+LIST needs to be a place and is assigned the returned modified LIST.
+
+The REST parameters are:
+ FROM-END - if true, will start deleting from the end,
+ START - the START index (default 0),
+ END - the END index (default is NIL, the end of list),
+ COUNT - the maximum count of elements to be deleted,
+ KEY - a function that derives values to be tested by the predicate."
+  (declare (ignore from-end start end count key))
+  (multiple-value-bind (vars vals places setter getter) (get-setf-expansion list env)
+    `(let* (,@(mapcar #'list vars vals)
+            (,(first places) (delete-if ,predicate ,getter ,@rest))
+            ,@(rest places))
+       ,setter)))
+
+(defmacro deletef-if-not (predicate list &rest rest
+                          &key from-end start end count key
+                          &environment env)
+  "Destructively delete all elements from the LIST that does NOT match the PREDICATE.
+LIST needs to be a place and is assigned the returned modified LIST.
+
+The REST parameters are:
+ FROM-END - if true, will start deleting from the end,
+ START - the START index (default 0),
+ END - the END index (default is NIL, the end of list),
+ COUNT - the maximum count of elements to be deleted,
+ KEY - a function that derives values to be tested by the predicate."
+  (declare (ignore from-end start end count key))
+  (multiple-value-bind (vars vals places setter getter) (get-setf-expansion list env)
+    `(let* (,@(mapcar #'list vars vals)
+            (,(first places) (delete-if-not ,predicate ,getter ,@rest))
+            ,@(rest places))
+       ,setter)))
 
 ;;;
 ;;; etc ...
