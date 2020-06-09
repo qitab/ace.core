@@ -25,11 +25,13 @@
 (in-package #:ace.core.etc)
 
 (defmacro define-constant (name value &key (test '#'eql) documentation)
-  "Defines a constant NAME with the VALUE.
- TEST is used to compare the VALUE for changes.
- DOCUMENTATION sets the documentation for the constant symbol.
+  "Defines a constant NAME with the VALUE, using TEST to compare
+ VALUE for changes. DEFCONSTANT compares using EQL and signals an
+ error when the values are different, so this macro may be useful
+ for creating bindings to lists or other structures that aren't EQL.
+ DOCUMENTATION sets the documentation for NAME.
  Example:
-   (constant:define +fields+ '(a b c)
+   (define-constant +fields+ '(a b c)
     :test #'equalp :documentation 'Fields used in...')
  Related:
   cl:defconstant
