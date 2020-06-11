@@ -14,6 +14,7 @@
         #:ace.core.once-only)
   (:import-from #:ace.core.type #:variable-information)
   (:export
+   #:one-of
    #:orf #:andf
    #:define-constant
    #:define-numerals
@@ -122,6 +123,14 @@
              `(defconstant ,n (%set-constant-value ',n ,o #'%numeral-eq)))))
 
 ;;;
+;;; one-of shortcut
+
+(defmacro one-of (e &rest members)
+  "True if element E compares EQL with at least one of the MEMBERS."
+  (once-only (e)
+    `(or ,@(lmap (m members) `(eql ,e ,m)))))
+
+;;;
 ;;; SETF forms for OR and AND.
 ;;; TODO(czak): Move to an own module.
 ;;;
@@ -186,15 +195,21 @@ This is different from a potential DEFINE-MODIFY-MACRO operator which
 would always set the place even in the case where its first value is non-NIL."
   (multiple-value-bind (vars vals places setter getter)
       (get-setf-expansion place env)
-    (let* ((place (if (cdr places) `(values ,@places) (car places)))
-           (setfs (lmap (form rest) `(setf ,place ,form))))
-      `(let* (,@(mapcar #'list vars vals)
-              ,@places)
-         (cond ((setf ,place ,getter)
-                ,place)
-               (,@(and (cdr places) '(t))
-                (or ,@setfs)
-                ,setter))))))
+    `(let* (,@(mapcar #'list vars vals)
+            ,@places)
+       ,(if (cdr places)
+            ;; multiple value places
+            (let ((store-vars `(values ,@places)))
+              `(cond ((setf ,store-vars ,getter)
+                      ,store-vars)
+                     (t
+                      (or ,@(lmap (form rest) `(setf ,store-vars ,form)))
+                      ,setter)))
+            ;; single value place
+            `(or ,getter
+                 (progn
+                   (setf ,(car places) (or ,@rest))
+                   ,setter))))))
 
 (defmacro andf (place &rest rest &environment env)
   "The ANDF modifying macro has a similar short-cut semantics as AND.
