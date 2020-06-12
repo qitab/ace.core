@@ -12,13 +12,16 @@
 
 (defpackage #:ace.core.package
   (:use #:cl #:ace.core)
-  #-sbcl
-  (:import-from #:trivial-garbage
-                #:make-weak-hash-table)
-  #-sbcl
-  (:import-from #:ace.core.thread
-                #:make-mutex
-                #:with-mutex)
+  (:import-from
+   #+sbcl      #:sb-ext
+   #+ccl       #:ccl
+   #+ecl       #:ext
+   #+abcl      #:ext
+   #+clasp     #:ext
+   #+lispworks #:hcl
+   #+allegro   #:excl
+   #:package-local-nicknames
+   #:add-package-local-nickname)
   (:export #:defpackage*
            #:define-summary-package
            #:aliases
@@ -59,76 +62,11 @@
   "Calls the builtin FIND-PACKAGE function with DESIGNATOR as the argument."
   (funcall +builtin-find-package-function+ designator))
 
-#-sbcl
-(progn
-  ;; Alias table of the package.
-  (defconstant +lock-table+ (or #-(or sbcl ccl) t)
-    "Indicates that the table are not synchronized and should be locked.")
-
-  (defvar *alias-table*
-    (apply #'make-weak-hash-table :test #'eq :weakness :key
-           #+sbcl '(:synchronized t)
-           #+ccl  '(:shared :lock-free))
-    "A hash map to an alist with package local aliases.")
-
-  (defvar *alias-mutex* (make-mutex "PACKAGE::*ALIAS-TABLE*")
-    "A mutex for the package ALIAS-TABLE.")
-
-  ;; TODO(czak): Maybe make those errors public.
-
-  (define-condition alias-error (error)
-    ((alias :initarg :alias :reader alias-error-alias)
-     ;; The scope in which the alias is placed.
-     (scope :initarg :package :reader alias-error-scope)
-     ;; The package to which the alias points to.
-     (package :initarg :package :initform nil :reader alias-error-package))
-    (:report
-     (lambda (error out) (declare (optimize (speed 0)))
-             (format out "The alias ~S for ~S in ~S causes an error"
-                     (alias-error-alias error)
-                     (package-name (alias-error-package error))
-                     (package-name (alias-error-scope error)))))
-    (:documentation "An error for signaled with respect to local package aliases."))
-
-  (define-condition alias-missing-error (alias-error) ()
-    (:report
-     (lambda (error out) (declare (optimize (speed 0)))
-             (format out "The package ~S has also following package aliases:~%~3T~S"
-                     (package-name (alias-error-scope error)) (alias-error-alias error))))
-    (:documentation "An error for signaled with respect to local package aliases."))
-
-  (define-condition alias-conflict-error (alias-error)
-    ((new-package :initarg :new :reader alias-conflict-error-new-package))
-    (:report
-     (lambda (error out) (declare (optimize (speed 0)))
-             (format out "The new alias ~S for ~S in ~S conflicts with an existing one for ~S"
-                     (alias-error-alias error)
-                     (package-name (alias-conflict-error-new-package error))
-                     (package-name (alias-error-scope error))
-                     (package-name (alias-error-package error)))))
-    (:documentation "An error signaled when a used alias is created for a new package."))
-
-  (defun %find-package (designator)
-    "Internal reimplementation of the FIND-PACKAGE function.
- Takes a DESIGNATOR of type PACKAGE, SYMBOL, STRING, or CHARACTER.
- Returns the package by local alias in the SCOPE or global name.
- Returns NIL if package was not found."
-    (let ((scope (and (boundp '*package*) *package*))
-          (name (if (typep designator 'package)
-                    (return-from %find-package designator)
-                    (string designator))))
-      (or (and scope (plusp (length name))
-               (cdr (assoc name (aliases scope) :test #'string=)))
-          (builtin-find-package name)))))
-
 (declaim (ftype (function (&optional package-designator) (values list &optional)) aliases))
 (defun aliases (&optional (scope *package*))
   "Return the package aliases for the SCOPE package designator."
   (let ((scope (find-package scope)))
-    #+sbcl (sb-ext:package-local-nicknames scope)
-    #-sbcl
-    (with-mutex (*alias-mutex* :lockp +lock-tables+)
-      (values (gethash scope *alias-table*)))))
+    (package-local-nicknames scope)))
 
 (declaim (ftype (function (string-designator package-designator &optional package-designator)
                           (values (or null package) &optional))))
@@ -139,37 +77,7 @@
  The SCOPE and PACKAGE designators are resolved in the global package namespace.
  It is an error to add an existing ALIAS to a different package.
  It is an error if SCOPE or PACKAGE do not exist."
-  #+sbcl
-  (sb-ext:add-package-local-nickname alias package scope)
-  #-sbcl
-  (let* ((scope-designator scope)
-         (scope (builtin-find-package scope))
-         (local-aliases (and scope (aliases scope)))
-         (package-designator package)
-         (package (builtin-find-package package))
-         (alias (string alias))
-         (cell (assoc alias local-aliases :test #'string=)))
-    (unless scope
-      (error "Cannot add a package alias to ~S. Package not found." scope-designator))
-    (unless package
-      (error "Cannot alias ~S as ~S. Package not found." package-designator alias))
-    (if cell
-        (if (string= (package-name package) (package-name (cdr cell)))
-            ;; Replace the package definition.
-            (setf (cdr cell) package)
-            ;; else - signal an alias-conflict-error.
-            (restart-case
-                (error 'alias-conflict-error
-                       :alias alias :package (cdr cell) :scope scope :new package)
-              (continue ()
-                :report "Overwrite the old alias and point it to the new package."
-                (setf (cdr cell) package))
-              (cancel ()
-                :report "Cancel the operation and keep the old alias."
-                (return-from add-alias))))
-        (with-mutex (*alias-mutex*)
-          (push (cons alias package) (gethash scope *alias-table*))))
-    package))
+  (add-package-local-nickname alias package scope))
 
 (declaim (ftype (function (package-designator &optional package-designator) (values))
                 add-namespace))
@@ -242,7 +150,7 @@
         ,@(loop for namespace in namespaces
              collect `(add-namespace ',namespace ',package))
         ,@(loop for (alias aliased) in aliases
-             collect `(add-alias ',(string alias) ',(string aliased) ',package)))
+                collect `(add-alias ',(string alias) ',(string aliased) ',package)))
 
        ;; TODO(czak): Maybe warn about additional packages.
 
@@ -268,17 +176,3 @@
         (dolist (symbol ',symbols)
           (import symbol summary-package)
           (export symbol summary-package))))))
-
-;;;
-;;; Patching the Lisp implementation.
-;;;
-
-(eval-always
- #-sbcl
- (handler-bind ((warning #'muffle-warning)
-                (condition #'continue))
-   ;; This seems like a generic way to support it on most Lisp implementations.
-   ;; Some Lisps like CMUCL need to override an internal function.
-   ;; Some Lisps like CLISP need to patch C sources.
-   (compile '%find-package)
-   (setf (symbol-function 'cl:find-package) #'%find-package)))

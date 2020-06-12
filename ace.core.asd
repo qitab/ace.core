@@ -49,7 +49,7 @@
   :version "1.0"
   :author "Lisp Community"
   :license "MIT"
-  :depends-on (bordeaux-threads closer-mop trivial-garbage)
+  :depends-on (bordeaux-threads closer-mop)
   :serial t
   :components
   #.(loop for f in *files* collect `(:file ,f)))
