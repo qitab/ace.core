@@ -38,6 +38,7 @@
    #:length
    #:length=
    #:elements-eq
+   #:undot
    #:match
    #:copy-if #:copy-if-not
    #:find #:find-if #:find-if-not
@@ -100,6 +101,15 @@ The function will also return true if the lists or their sub-lists compare EQ."
       ((eq l1 l2) t)
     (unless (eq (car l1) (car l2))
       (return nil))))
+
+(defun* undot (list)
+  "Return LIST. If LIST is dotted,
+return a copy that is a proper list."
+  (declare (self inline (list) list))
+  (let ((last (last list)))
+    (if (cdr last)
+        (nconc (butlast list) (list (car last) (cdr last)))
+        list)))
 
 (defun* match (list1 list2 &key
                            (test #'eql) (key #'identity)

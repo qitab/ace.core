@@ -45,6 +45,16 @@
   (expect (not (list:elements-eq (list 1 2) (list 1 3))))
   (expect (list:elements-eq (list 1 2 3) (list 1 2 3))))
 
+(deftest undot-test ()
+  (declare (notinline list:undot))
+  (expect (eq (list:undot nil) nil))
+  (let ((l1 '(1)))
+    (expect (eq (list:undot l1) l1)))
+  (let ((l12 '(1 2)))
+    (expect (eq (list:undot l12) l12)))
+  (expect (equal (list:undot '(1 . 2)) '(1 2)))
+  (expect (equal (list:undot '(1 2 . 3)) '(1 2 3))))
+
 (deftest match-test ()
   (declare (notinline list:match))
   (expect (list:match () () :test #'=))
