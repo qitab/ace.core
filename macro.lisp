@@ -149,11 +149,24 @@ of the value sets.
 
 (defun lexenv ()
   "Returns the current lexical environment or NIL."
-  #+sbcl (and (boundp 'sb-c:*lexenv*) sb-c:*lexenv*))
+  #+sbcl (and (boundp 'sb-c:*lexenv*) sb-c:*lexenv*)
+  #+cmucl (and (boundp 'c::*lexical-environment*) c::*lexical-environment*)
+  #+ecl (and (boundp 'compiler::*cmp-env*) compiler::*cmp-env*)
+  #+ccl (and (boundp 'ccl::*nx-lexical-environment*) ccl::*nx-lexical-environment*))
 
 (defmacro eval-always (&rest body)
   "Evaluates the BODY at compile, load, and execute time."
   `(eval-when (:compile-toplevel :load-toplevel :execute) ,@body))
+
+(defmacro with-lexical-environment ((env) &body body)
+  "Bind the lexical environment to ENV."
+  #-(or sbcl cmucl ecl ccl)
+  (warn "Access to lexical environment not implemented.")
+  `(let (#+sbcl (sb-c:*lexenv* ,env)
+         #+cmucl (c::*lexical-environment* ,env)
+         #+ecl (compiler::*cmp-env* ,env)
+         #+ccl (ccl::*nx-lexical-environment* ,env))
+     (locally ,@body)))
 
 (eval-always
 (defun eval* (expression &optional (environment (lexenv)) default)
@@ -165,7 +178,9 @@ lexical ENVIRONMENT or if it cannot be evaluated returns (values DEFAULT nil)."
          (values
           (values
            #+sbcl (sb-int:constant-form-value expression environment)
-           #-sbcl (error "EVAL* not implemented."))
+           #-sbcl
+           (with-lexical-environment (environment)
+             (eval expression)))
           t))
         (t
          (values (eval expression) t))))) ; NOLINT
