@@ -820,8 +820,7 @@ location information."
   "Returns the starting and ending line and column numbers of the form processed by the compiler.
  WHOLE is a form for which the line and column numbers are to be returned.
  Returns (values start-line start-column)."
-  #+sbcl
-  (sb-ext:current-line-and-column whole))
+  #+google3 (sb-ext:current-line-and-column whole))
 
 (defun current-file-namestring ()
   "Returns the namestring for the current file being compiled."
