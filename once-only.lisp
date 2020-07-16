@@ -214,7 +214,11 @@ Parameters:
                      (setf
                       newenv
                       (handler-bind ((warning #'muffle-warning))
+                        #+sbcl
                         (sb-cltl2:augment-environment
+                         newenv :function `(,fn) :declare `(,ftype))
+                        #+ccl
+                        (ccl:augment-environment
                          newenv :function `(,fn) :declare `(,ftype))))))))
              (maybe-bind (form sym type dx inline)
                ;; Generates (optionally) a binding for FORM and return the

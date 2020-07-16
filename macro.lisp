@@ -612,6 +612,14 @@ Returns (VALUES NIL NIL) if SYMBOL cannot be determined to be a variable in ENV.
                      (t       (values type t))))))))
       (values nil nil)))
 
+;; Mulligan for non-sbcl
+;; TODO: Get this working for other lisps
+#-sbcl
+(defun variable-type (symbol &optional env)
+  "Returns (VALUES NIL NIL) as SYMBOL cannot be determined to be a variable in ENV
+for non-sbcl at the current state."
+  (values nil nil))
+
 (declaim (ftype (function (symbol list &optional list)
                           (values (or cons null) &optional)) find-declaration))
 (defun find-declaration (identifier body &optional default)
