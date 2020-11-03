@@ -63,6 +63,7 @@
   (expect (equal '(1 1 1 1) (lconc (i (list 1 2 3 4)) (j '(0 1 2 3))
                                    (list (- i j))))))
 
+
 (deftest with-gensyms-test ()
   (expect (gensymp (with-gensyms (s) s)))
   (expect (gensymp (with-gensyms ((s "FOO")) s)))
@@ -73,6 +74,17 @@
 
   (expect (macroexpand '(with-gensyms (s) s)))
   (expect (macroexpand '(with-gensyms ((s "FOO")) s))))
+
+(deftest with-syms-test ()
+  (expect (gensymp (with-syms (s) s)))
+  (expect (gensymp (with-syms ((s "FOO")) s)))
+  (let* ((foo :foo)
+         (sym (with-syms ((s foo)) s)))
+    (expect (string-equal :foo sym))
+    (expect (gensymp (with-syms ((s foo)) s))))
+
+  (expect (macroexpand '(with-syms (s) s)))
+  (expect (macroexpand '(with-syms ((s "FOO")) s))))
 
 (defun! compile-time-function (&optional (result "compile-time"))
   (declare (string result))

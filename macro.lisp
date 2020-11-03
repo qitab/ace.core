@@ -54,6 +54,9 @@
    #:gensymp
    #:with-gensyms
 
+   #:sym*
+   #:with-syms
+
    #:lexenv
    #:remove-declarations
    #:remove-type-declarations
@@ -490,6 +493,38 @@ E.g.:
 "
   (let ((symbols (lmap (s symbols) (if (consp s) s `(,s ',s)))))
     `(let ,(lmap ((s name) symbols) `(,s (gensym* ,name)))
+       ,@body)))
+
+
+(declaim (ftype (function (&rest t) (values symbol &optional)) gensym*)
+         (inline sym*))
+(defun sym* (&rest rest)
+  "Return a free symbol that is not interned into any package.
+ The symbol's name is based on the string designators in the REST argument."
+  (declare (dynamic-extent rest))
+  (cond ((null (car rest))
+         (make-symbol ""))
+        ((cdr rest)
+         (make-symbol (apply #'concatenate 'string (mapcar #'genstr* rest))))
+        (t
+         (make-symbol (genstr* (car rest))))))
+(define-compiler-macro sym* (&rest rest)
+  (if rest
+      `(make-symbol (concatenate 'string ,@(lmap (r rest) `(genstr* ,r))))
+      `(make-symbol "")))
+
+(defmacro with-syms ((&rest symbols) &body body)
+  "SYMBOLS are bound to uninterned symbols around the BODY forms.
+Each of the SYMBOL specifiers can also have the form (SYMBOL NAME)
+where NAME is evaluated at runtime and used as the symbol name.
+
+E.g.:
+ (with-syms ((s :FOO) t u v)
+   `(let ((,s ...))
+      ...))
+"
+  (let ((symbols (lmap (s symbols) (if (consp s) s `(,s ',s)))))
+    `(let ,(lmap ((s name) symbols) `(,s (sym* ,name)))
        ,@body)))
 
 ;;;
