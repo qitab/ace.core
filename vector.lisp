@@ -115,13 +115,9 @@ If FORCE-INLINE is true, the WITH-VECTOR forms will be inlined."
     (inst #:PREFETCH :T0
           ;; TODO(czak): Allow immediate and signed-reg index,
           ;;   precompute best EA based on the input node.
-          (make-ea
-           :byte
-           :base array
-           :scale (ash 1 (- word-shift n-fixnum-tag-bits))
-           :index index
-           :disp (- (* sb-vm:vector-data-offset sb-vm:n-word-bytes)
-                    sb-vm:other-pointer-lowtag)))))
+          (ea (- (* sb-vm:vector-data-offset sb-vm:n-word-bytes)
+                 sb-vm:other-pointer-lowtag)
+              array index (ash 1 (- word-shift n-fixnum-tag-bits))))))
 
 (defun %array-prefetch-t0/word (a i)
   ;; Function stub for the VOP.
