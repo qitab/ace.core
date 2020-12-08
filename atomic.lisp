@@ -171,14 +171,10 @@ set it to an OR value made of CLAUSES."
   (:result-types unsigned-num)
   (:generator 4
     (move rax old)
-    (inst #:cmpxchg (make-ea
-                   :qword
-                   :base array
-                   :scale (ash 1 (- word-shift n-fixnum-tag-bits))
-                   :index index
-                   :disp (- (* vector-data-offset n-word-bytes)
-                            other-pointer-lowtag))
-          new :lock)
+    (inst #:cmpxchg :lock
+          (ea (- (* vector-data-offset n-word-bytes) other-pointer-lowtag)
+              array index (ash 1 (- word-shift n-fixnum-tag-bits)))
+          new)
     (move result rax)))
 
 (defun %array-cas/word (a i o n) (%array-cas/word a i o n))
