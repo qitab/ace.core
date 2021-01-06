@@ -103,6 +103,7 @@ If FORCE-INLINE is true, the WITH-VECTOR forms will be inlined."
   :overwrite-fndb-silently t)
 
 #+sbcl sb-vm::
+#+sbcl
 (define-vop (ace.core.vector::%array-prefetch-t0/word)
   ;; VOP for PREFETCH TO on word vectors, with a tagged register index.
   (:translate ace.core.vector::%array-prefetch-t0/word)
