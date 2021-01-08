@@ -20,16 +20,16 @@
      "enum"
      "os"
      "sequence"
-     "tty")
+     "tty"
+     "string"
+     "with")
    #+sbcl
-   '("string"
-     "hook"
+   '("hook"
      "thread"
      "number"
      "fx"
      "atomic"
-     "io"
-     "with")))
+     "io")))
 
 #+sbcl (require :sb-introspect)
 

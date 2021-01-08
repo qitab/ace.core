@@ -874,10 +874,15 @@ location information."
          #+sbcl (sb-introspect:definition-source-pathname
                  (sb-introspect:find-definition-source function)))))
 
+#-google3
+(define-compiler-macro line-and-column-numbers (&optional whole)
+  (warn "LINE-AND-COLUMN-NUMBERS unimplemented, always return -1")
+  -1)
 (defun line-and-column-numbers (&optional whole)
   "Returns the starting and ending line and column numbers of the form processed by the compiler.
  WHOLE is a form for which the line and column numbers are to be returned.
  Returns (values start-line start-column)."
+  #-google3 -1
   #+google3 (sb-ext:current-line-and-column whole))
 
 (defun current-file-namestring ()
