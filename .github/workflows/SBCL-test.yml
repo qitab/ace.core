@@ -1,5 +1,4 @@
-# @file 
--test.yml
+# @file SBCL-test.yml
 ---
 name: SBCL-Tests
 
