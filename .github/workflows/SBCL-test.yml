@@ -1,0 +1,37 @@
+# @file SBCL-test.yml
+---
+name: SBCL-Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download sbcl
+        run: sudo apt install sbcl
+
+      - name: Download quicklisp
+        run: curl -o quicklisp.lisp 'https://beta.quicklisp.org/quicklisp.lisp'
+
+      - name: Install quicklisp
+        run: |
+          sbcl --noinform --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install :path \"$GITHUB_WORKSPACE/quicklisp/\")"
+          sbcl --noinform --non-interactive --load "$GITHUB_WORKSPACE/quicklisp/setup.lisp" --eval '(ql-util:without-prompting (ql:add-to-init-file))'
+
+      - name: Download repo
+        uses: actions/checkout@v2
+        with:
+          path: quicklisp/local-projects/ace.core
+
+      - name: Load and run tests
+        run: |
+          export PATH="$PATH:$GITHUB_WORKSPACE/quicklisp/local-projects/cl-protobufs/protoc/"
+          sbcl --noinform --non-interactive  --eval '(ql:quickload :bordeaux-threads)' --eval '(ql:quickload :closer-mop)' --eval '(ql:quickload :ace.core)' 2> report
+          cat report
+          ! grep -q "ERROR" report
