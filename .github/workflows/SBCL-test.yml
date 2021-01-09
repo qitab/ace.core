@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Install Glibc
-        run: sudo apt install glibc
+        run: sudo apt install libc6
 
       - name: Download sbcl
         run: |
