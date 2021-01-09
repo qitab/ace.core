@@ -32,6 +32,6 @@ jobs:
       - name: Load and run tests
         run: |
           export PATH="$PATH:$GITHUB_WORKSPACE/quicklisp/local-projects/cl-protobufs/protoc/"
-          sbcl --noinform --non-interactive  --eval '(ql:quickload :bordeaux-threads)' --eval '(ql:quickload :closer-mop)' --eval '(ql:quickload :ace.core)' 2> report
+          sbcl --noinform --non-interactive  --eval '(ql:quickload :bordeaux-threads)' --eval '(ql:quickload :closer-mop)' --eval '(ql:quickload :ace.core)' 2>&1 | tee  report
           cat report
           ! grep -q "ERROR" report
