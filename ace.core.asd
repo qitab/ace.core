@@ -31,14 +31,12 @@
      "atomic"
      "io")))
 
-#+sbcl (require :sb-introspect)
-
 (defsystem ace.core
   :name "Ace Lisp Core Libraries"
   :description "Common utilities used at Ace for Lisp and linked into most Ace Lisp binaries."
   :long-description
   "The ACE.CORE library contains following modules:
- ace.core - is a summary package that can be used as a namespace,
+  ace.core - is a summary package that can be used as a namespace,
   .macro - a set of utilities for writing macros,
   .type - utilities for dealing with types and declarations,
   .symbol - utilities dealing with symbols,
@@ -60,7 +58,10 @@
   :version "1.0"
   :author "Lisp Community"
   :license "MIT"
-  :depends-on (bordeaux-threads closer-mop)
+  :depends-on (:bordeaux-threads
+               :closer-mop
+               #+sbcl :sb-introspect
+               #+sbcl :sb-cltl2)
   :serial t
   :components
   #.(loop for f in *files* collect `(:file ,f)))
