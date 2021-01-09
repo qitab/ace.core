@@ -1,0 +1,39 @@
+# @file CCL-test.yml
+---
+name: CCL-Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download ccl
+        run: |
+          curl -o ccl.tar.gz --location 'https://github.com/Clozure/ccl/releases/download/v1.12/ccl-1.12-linuxx86.tar.gz'
+          tar -xzf ccl.tar.gz
+
+      - name: Download quicklisp
+        run: curl -o quicklisp.lisp 'https://beta.quicklisp.org/quicklisp.lisp'
+
+      - name: Install quicklisp
+        run: |
+          ./ccl/lx86cl64 --load quicklisp.lisp --eval "(quicklisp-quickstart:install :path \"$GITHUB_WORKSPACE/quicklisp/\") (quit)"
+          ./ccl/lx86cl64 --load "$GITHUB_WORKSPACE/quicklisp/setup.lisp" --eval '(ql-util:without-prompting (ql:add-to-init-file)) (quit)'
+
+      - name: Download repo
+        uses: actions/checkout@v2
+        with:
+          path: quicklisp/local-projects/ace.core
+
+      - name: Load and run tests
+        run: |
+          export PATH="$PATH:$GITHUB_WORKSPACE/quicklisp/local-projects/cl-protobufs/protoc/"
+          ./ccl/lx86cl64 --eval '(ql:quickload :bordeaux-threads)' --eval '(ql:quickload :closer-mop)' --eval '(ql:quickload :ace.core)' 2> report
+          cat report
+          ! grep -q "Error" report
