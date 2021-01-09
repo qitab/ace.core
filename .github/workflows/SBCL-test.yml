@@ -14,7 +14,12 @@ jobs:
 
     steps:
       - name: Install Glibc
-        run: sudo apt install libc6
+        run: |
+          echo “deb http://ftp.us.debian.org/debian testing main contrib non-free” >> /etc/apt/sources.list
+          sudo apt update
+          sudo apt install build-essential -y
+
+
 
       - name: Download sbcl
         run: |
