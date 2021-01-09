@@ -10,29 +10,20 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
-      - name: Install Glibc
+      - name: Install SBCL
         run: |
-          sudo echo “deb http://ftp.us.debian.org/debian testing main contrib non-free” >> /etc/apt/sources.list
-          sudo apt update
-          sudo apt install build-essential -y
-
-
-
-      - name: Download sbcl
-        run: |
-          curl -o sbcl.tar.bz2 https://pilotfiber.dl.sourceforge.net/project/sbcl/sbcl/2.1.0/sbcl-2.1.0-x86-64-linux-binary.tar.bz2                              
-          bzip2 -cd sbcl.tar.bz2 | tar xvf -                                                                                                                     
+          sudo apt install sbcl
 
       - name: Download quicklisp
         run: curl -o quicklisp.lisp 'https://beta.quicklisp.org/quicklisp.lisp'
 
       - name: Install quicklisp
         run: |
-          ./sbcl-2.1.0-x86-64-linux/run-sbcl.sh --noinform --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install :path \"$GITHUB_WORKSPACE/quicklisp/\")"
-          ./sbcl-2.1.0-x86-64-linux/run-sbcl.sh --noinform --non-interactive --load "$GITHUB_WORKSPACE/quicklisp/setup.lisp" --eval '(ql-util:without-prompting (ql:add-to-init-file))'
+          sbcl --noinform --non-interactive --load quicklisp.lisp --eval "(quicklisp-quickstart:install :path \"$GITHUB_WORKSPACE/quicklisp/\")"
+          sbcl --noinform --non-interactive --load "$GITHUB_WORKSPACE/quicklisp/setup.lisp" --eval '(ql-util:without-prompting (ql:add-to-init-file))'
 
       - name: Download repo
         uses: actions/checkout@v2
@@ -42,6 +33,6 @@ jobs:
       - name: Load and run tests
         run: |
           export PATH="$PATH:$GITHUB_WORKSPACE/quicklisp/local-projects/cl-protobufs/protoc/"
-          ./sbcl-2.1.0-x86-64-linux/run-sbcl.sh --noinform --non-interactive  --eval '(ql:quickload :bordeaux-threads)' --eval '(ql:quickload :closer-mop)' --eval '(ql:quickload :ace.core)' 2>&1 | tee  report
+          sbcl --noinform --non-interactive  --eval '(ql:quickload :bordeaux-threads)' --eval '(ql:quickload :closer-mop)' --eval '(ql:quickload :ace.core)' 2>&1 | tee  report
           cat report
           ! grep -q "ERROR" report
