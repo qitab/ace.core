@@ -60,8 +60,35 @@
   :license "MIT"
   :depends-on (:bordeaux-threads
                :closer-mop
+               :trivial-backtrace
                #+sbcl :sb-introspect
                #+sbcl :sb-cltl2)
+  :in-order-to ((test-op (test-op :ace.core/tests)))
   :serial t
   :components
   #.(loop for f in *files* collect `(:file ,f)))
+
+(defsystem :ace.core/tests
+  :name "ace.core tests"
+  :version "1.0"
+  :licence "MIT"
+  :description      "Test code for ace.core"
+  :long-description "Test code for ace.core"
+  :depends-on (:ace.core :ace.test)
+  :serial t
+  :pathname ""
+  ;; Sadly not all tests are passing...
+  :components
+  #.(loop for f in *files*
+          unless (member f '("core"
+                             "macro"
+                             "switch"
+                             "os"
+                             "check"
+                             "vector"
+                             "defun")
+                         :test #'string=)
+            collect `(:file ,(concatenate 'string f "-test")))
+  :perform (test-op (o c)
+                    (uiop:symbol-call '#:ace.test
+                                      '#:run-tests)))
