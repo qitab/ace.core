@@ -49,11 +49,11 @@ be executed. The remaining VARS act as parameters.
              ,,@body))))))
 
 (defmacro with ((&rest bindings) &body body)
-  "With evaluates BINDING successively binding each variable
+  "With evaluates BINDINGS successively binding each variable
 to the corresponding init-form value. If the value is NIL,
 the evaluation of successive bindings and the BODY aborts.
 
-With will provide an UNWIND-PROTECTED environment where the cleanup
+With provides an UNWIND-PROTECT environment where the cleanup
 is populated with forms generated using the WITH:CLEANUP generic function.
 The cleanup forms are evaluated in reverse order to the BINDINGS
 and are evaluated only if the corresponding (first) value was not NIL.
