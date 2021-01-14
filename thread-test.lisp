@@ -146,10 +146,6 @@
 
 (deftest stack-allocated-test ()
   (expect (not (stack-allocated-p 1)))
-  (expect (not (stack-allocated-p sb-vm:*control-stack-start*)))
-  (expect (not (stack-allocated-p sb-vm:*control-stack-end*)))
-  (expect (not (stack-allocated-p (ash sb-vm:*control-stack-start* -1))))
-  (expect (not (stack-allocated-p (ash sb-vm:*control-stack-end* -1))))
   (let ((c (cons 1 2)))
     (expect (not (stack-allocated-p c))))
   (let ((c (cons 1 2)))

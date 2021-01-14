@@ -38,6 +38,7 @@
   (:import-from #:sb-ext
                 sb-ext:atomic-incf
                 sb-ext:atomic-decf
+                sb-ext:stack-allocated-p
                 sb-ext:word)
   #+sbcl
   (:import-from #:sb-thread
@@ -497,17 +498,3 @@ there is still possibility that the MUTEX remains locked resulting in an undefin
 (defun print-backtraces (&key (stream *debug-io*))
   "Prints the backtraces for all threads to the STREAM."
   (format stream "~{~&~80~~%~A~&~}" (ace.core.thread:backtraces)))
-
-;;;
-;;; Stack utilities.
-;;;
-
-(defun stack-allocated-p (x)
-  "True if X is an object on the current threads stack."
-  ;; TODO(czak): Just forward the function from SB-THREAD once implemented.
-  #+sbcl
-  (let ((a (sb-kernel:get-lisp-obj-address x)))
-    (and (sb-vm:is-lisp-pointer a)
-         (<= (the sb-ext:word sb-vm:*control-stack-start*)
-             (ash a -1)
-             (the sb-ext:word sb-vm:*control-stack-end*)))))
