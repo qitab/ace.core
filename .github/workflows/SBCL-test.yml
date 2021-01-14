@@ -30,6 +30,12 @@ jobs:
         with:
           path: quicklisp/local-projects/ace.core
 
+      - name: Download ace.test
+        uses: actions/checkout@v2
+        with:
+          repository: cybersurf/ace.test
+          path: quicklisp/local-projects/ace.test
+
       - name: Load and run tests
         run: |
           export PATH="$PATH:$GITHUB_WORKSPACE/quicklisp/local-projects/cl-protobufs/protoc/"
