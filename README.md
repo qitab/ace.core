@@ -5,6 +5,4 @@
 
 This is a library containing utilities for working with Common Lisp.
 
-This is a test change.
-
 ### Disclaimer: This is not an official Google product.
