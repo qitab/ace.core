@@ -96,37 +96,36 @@ If FORCE-INLINE is true, the WITH-VECTOR forms will be inlined."
 ;;;
 ;;; Prefetch
 ;;;
-
 #+sbcl
-(sb-c:defknown %array-prefetch-t0/word (t index) (values)
-  (sb-c::dx-safe sb-c:always-translatable)
-  :overwrite-fndb-silently t)
+(progn
+  (sb-c:defknown %array-prefetch-t0/word (t index) (values)
+    (sb-c::dx-safe sb-c:always-translatable)
+    :overwrite-fndb-silently t)
 
-#+sbcl sb-vm::
-#+sbcl
-(define-vop (ace.core.vector::%array-prefetch-t0/word)
-  ;; VOP for PREFETCH TO on word vectors, with a tagged register index.
-  (:translate ace.core.vector::%array-prefetch-t0/word)
-  (:policy :fast-safe)
-  (:args (array :scs (descriptor-reg) :to :eval)
-         (index :scs (any-reg) :to :result))
-  (:arg-types * positive-fixnum)
-  (:results)
-  (:generator 4
-    (inst #:PREFETCH :T0
-          ;; TODO(czak): Allow immediate and signed-reg index,
-          ;;   precompute best EA based on the input node.
-          (ea (- (* sb-vm:vector-data-offset sb-vm:n-word-bytes)
-                 sb-vm:other-pointer-lowtag)
-              array index (ash 1 (- word-shift n-fixnum-tag-bits))))))
+  sb-vm::
+  (define-vop (ace.core.vector::%array-prefetch-t0/word)
+      ;; VOP for PREFETCH TO on word vectors, with a tagged register index.
+      (:translate ace.core.vector::%array-prefetch-t0/word)
+    (:policy :fast-safe)
+    (:args (array :scs (descriptor-reg) :to :eval)
+           (index :scs (any-reg) :to :result))
+    (:arg-types * positive-fixnum)
+    (:results)
+    (:generator 4
+                (inst #:PREFETCH :T0
+                      ;; TODO(czak): Allow immediate and signed-reg index,
+                      ;;   precompute best EA based on the input node.
+                      (ea (- (* sb-vm:vector-data-offset sb-vm:n-word-bytes)
+                             sb-vm:other-pointer-lowtag)
+                          array index (ash 1 (- word-shift n-fixnum-tag-bits))))))
 
-(defun %array-prefetch-t0/word (a i)
-  ;; Function stub for the VOP.
-  ;; Define in terms of the VOP translation.
-  (%array-prefetch-t0/word a i))
+  (defun %array-prefetch-t0/word (a i)
+    ;; Function stub for the VOP.
+    ;; Define in terms of the VOP translation.
+    (%array-prefetch-t0/word a i))
 
-(defun* prefetch (array index)
-  "Prefetch memory for a word ARRAY at INDEX to all caches.
+  (defun* prefetch (array index)
+    "Prefetch memory for a word ARRAY at INDEX to all caches.
 
 Prefetch memory into all caches. This kind of software prefetch is useful in
 case of a non-liner or unpredictable memory access where the memory address is
@@ -139,7 +138,7 @@ Prefetch can help if profiling has determined that the memory throughput
 has not been maxed out. It may cause a slowdown otherwise.
 
 Note that any prefetch offsets are usually CPU and memory hardware dependent."
-  (declare (self inline (array index)))
-  (etypecase array
-    ((or simple-vector (simple-array word 1))
-     (%array-prefetch-t0/word array index))))
+    (declare (self inline (array index)))
+    (etypecase array
+      ((or simple-vector (simple-array word 1))
+       (%array-prefetch-t0/word array index)))))

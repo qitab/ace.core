@@ -29,15 +29,17 @@
   (expect (eq (vector:make-empty '(or integer symbol character string))
               (vector:make-empty 't))))
 
-(declaim (inline %test-prefetch))
-(defun %test-prefetch (x)
-  (declare (fixnum x))
-  (let ((a (make-array 128 :initial-element 0)))
-    ;; Not a real-use case. As DougK explains:
-    ;;  "Prefetch followed immediately by a read to the same
-    ;;   location is strictly worse than just a read alone."
-    (vector:prefetch a (logand x 15))
-    (the fixnum (svref a (logand x 15)))))
+#+sbcl
+(progn
+  (declaim (inline %test-prefetch))
+  (defun %test-prefetch (x)
+    (declare (fixnum x))
+    (let ((a (make-array 128 :initial-element 0)))
+      ;; Not a real-use case. As DougK explains:
+      ;;  "Prefetch followed immediately by a read to the same
+      ;;   location is strictly worse than just a read alone."
+      (vector:prefetch a (logand x 15))
+      (the fixnum (svref a (logand x 15)))))
 
-(deftest test-prefetch ()
-  (expect (= 0 (%test-prefetch 10))))
+  (deftest test-prefetch ()
+    (expect (= 0 (%test-prefetch 10)))))
