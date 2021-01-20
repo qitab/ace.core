@@ -22,11 +22,11 @@
      "sequence"
      "tty"
      "string"
-     "with")
+     "with"
+     "number")
    #+sbcl
    '("hook"
      "thread"
-     "number"
      "fx"
      "atomic"
      "io")))

@@ -48,16 +48,49 @@
   "True if X is a fixnum."
   (typep x 'fixnum))
 
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+(defun %without-floating-point-traps (body)
+  "Executes BODY with all floating point exceptions switched off."
+  (declare (function body))
+  #-(or sbcl abcl ccl)
+  (return-from %without-floating-point-traps
+    ;; WARNING: Floating point traps have not been disabled here.
+    (funcall body))
+  #+sbcl
+  (let ((traps (getf (sb-int:get-floating-point-modes) :traps)))
+    (sb-int:set-floating-point-modes :traps nil)
+    (unwind-protect (funcall body)
+      (sb-int:set-floating-point-modes
+       :traps traps :current-exceptions nil :accrued-exceptions nil)))
+  #+abcl
+  (let ((traps (getf (ext:get-floating-point-modes) :traps)))
+    (ext:set-floating-point-modes :traps nil)
+    (unwind-protect (funcall body)
+      (ext:set-floating-point-modes :traps traps)))
+  #+ccl
+  (let ((overflow (ccl:get-fpu-mode :overflow))
+        (underflow (ccl:get-fpu-mode :underflow))
+        (division-by-zero (ccl:get-fpu-mode :division-by-zero))
+        (invalid (ccl:get-fpu-mode :invalid))
+        (inexact (ccl:get-fpu-mode :inexact)))
+    (unwind-protect
+         (progn
+           (ccl:set-fpu-mode :overflow nil
+                             :underflow nil
+                             :division-by-zero nil
+                             :invalid nil
+                             :inexact nil)
+           (funcall body))
+      (ccl:set-fpu-mode :overflow overflow
+                        :underflow underflow
+                        :division-by-zero division-by-zero
+                        :invalid invalid
+                        :inexact inexact)))))
+
 (defmacro without-floating-point-traps (&body body)
   "Executes the BODY with all floating point exceptions switched off."
-  #+sbcl
-  `(let ((traps (getf (sb-int:get-floating-point-modes) :traps)))
-     (sb-int:set-floating-point-modes :traps nil)
-     (unwind-protect (progn ,@body)
-       (sb-int:set-floating-point-modes
-        :traps traps :current-exceptions nil :accrued-exceptions nil)))
-  #-sbcl
-  body)
+  `(%without-floating-point-traps (lambda () ,@body)))
 
 (defmacro define-float-nan (name type)
   "Define a NaN variable with the NAME for a give TYPE of float numbers."
