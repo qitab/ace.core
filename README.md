@@ -2,6 +2,7 @@
 
 ![SBCL-Tests](https://github.com/qitab/ace.core/workflows/SBCL-Tests/badge.svg)
 ![CCL-Tests](https://github.com/qitab/ace.core/workflows/CCL-Tests/badge.svg)
+[![Gitter](https://badges.gitter.im/qitab/community.svg)](https://gitter.im/qitab/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 This is a library containing utilities for working with Common Lisp.
 
