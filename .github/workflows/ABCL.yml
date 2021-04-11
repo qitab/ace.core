@@ -1,0 +1,41 @@
+# @file CCL-test.yml
+---
+name: ABCL-Tests
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:      
+      - name: Download ABCL
+        run: |
+          sudo apt install ant
+          git clone https://github.com/armedbear/abcl.git
+          cd abcl
+          ant
+          cd ..
+
+      - name: Download quicklisp
+        run: curl -o quicklisp.lisp 'https://beta.quicklisp.org/quicklisp.lisp'
+
+      - name: Install quicklisp
+        run: |
+          ./abcl/abcl --batch --load quicklisp.lisp --eval "(quicklisp-quickstart:install :path \"$GITHUB_WORKSPACE/quicklisp/\") (quit)"
+          ./abcl/abcl --batch --load "$GITHUB_WORKSPACE/quicklisp/setup.lisp" --eval '(ql-util:without-prompting (ql:add-to-init-file)) (quit)'
+
+      - name: Download repo
+        uses: actions/checkout@v2
+        with:
+          path: quicklisp/local-projects/ace.core
+
+      - name: Load and run tests
+        run: |
+          ./abcl/abcl --batch --eval '(ql:quickload :bordeaux-threads)' --eval '(ql:quickload :closer-mop)' --eval '(ql:quickload :ace.core)' 2> report
+          cat report
+          ! grep -q "Error" report
