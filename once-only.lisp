@@ -340,7 +340,7 @@ Parameters:
     "Assures that the arguments as specified in the LAMBDA-LIST are evaluated
 only once and in the right order in the BODY of the macro.
 
-ONLY-ONCE is useful when writing compiler macros for functions
+ONCE-ONLY is useful when writing compiler macros for functions
 that have keyword arguments in their lambda-list.
 
 Parameters:
