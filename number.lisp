@@ -310,17 +310,15 @@
                    ((and (<= 1.d-3 number) (< number 1.d+7))
                     (format out "~F" number))
                    ((<= number most-positive-double-float)
-                    (let* ((str (with-output-to-string (out nil :element-type 'base-char)
-                                  (format out "~,,,,,,'EE" number)))
-                           (pos (the (unsigned-byte 32) (position #\E str))))
-                      (declare (type simple-base-string str))
-                      (write-string str out :end pos)
-                      (when (char= (char str (1- pos)) #\.)
-                        (write-char #\0 out))
-                      (write-char #\E out)
-                      (let ((exponent (1+ pos)))
-                        (when (char= (char str exponent) #\+) (incf exponent))
-                        (write-string str out :start exponent))))
+                    (let* ((string (format nil "~,,,,,,'EE" number))
+                           (exp-sign (position #\+ string :from-end t)))
+                      ;; NUMBER is positive, so if #\+ is present,
+                      ;; then it is exponent sign which we want not to output.
+                      (cond (exp-sign
+                             (write-string string out :end exp-sign)
+                             (write-string string out :start (1+ exp-sign)))
+                            (t
+                             (write-string string out)))))
                    (t (write-string "inf" out)))))
     (declare (dynamic-extent #'%write-float))
     (if out
