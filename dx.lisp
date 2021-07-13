@@ -33,11 +33,25 @@
        ,@body)))
 
 (defmacro flet ((&rest bindings) &body body)
-  "Declare function BINDINGS as dynamic-extent within BODY scope."
+  "Declare function BINDINGS as dynamic-extent within BODY scope.
+As a convenience syntax for DX:FLET an `inline' declaration may
+optionally precede the function definition. E.g.:
+
+  (dx:flet (inline (f (x) x)
+            inline (g () :a))
+    (eql :a (f (g))))
+"
   (%flet-form 'cl:flet bindings body))
 
 (defmacro labels ((&rest bindings) &body body)
-  "Declare function BINDINGS as dynamic-extent within BODY scope."
+  "Declare function BINDINGS as dynamic-extent within BODY scope.
+As a convenience syntax for DX:LABELS an `inline' declaration may
+optionally precede the function definition. E.g.:
+
+  (dx:labels (inline (f (x) x)
+              inline (g () :a))
+    (eql :a (f (g))))
+"
   (%flet-form 'cl:labels bindings body))
 
 (defmacro flet* ((&rest bindings) &body body)
