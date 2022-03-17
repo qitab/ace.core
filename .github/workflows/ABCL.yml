@@ -1,6 +1,6 @@
 # @file CCL-test.yml
 ---
-name: ABCL-Tests
+name: ABCL-Test
 
 on:
   push:
