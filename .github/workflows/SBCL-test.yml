@@ -8,6 +8,9 @@ on:
   pull_request:
     branches: [ master ]
 
+  # Enable the Run Workflow button on the Actions tab.
+  workflow_dispatch:
+
 jobs:
   test:
     runs-on: ubuntu-20.04
