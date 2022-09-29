@@ -54,6 +54,32 @@
   #-(or sbcl ccl)
   (make-array 0 :element-type element-type))
 
+(defun* vector-nth (n v)
+  (aref v n))
+
+(defun* vector-first (v)
+  (vector-nth 0 v))
+
+(defun* vector-car (v)
+  (vector-nth 0 v))
+
+(defun* vector-rest (v)
+  (let ((size (length v)))
+    (if (> size 1)
+        (subseq v 1)
+        nil)))
+
+(defun* vector-cdr (v)
+  (vector-rest v))
+
+(defun* vector-last (v)
+  (vector-nth (i1- (length v)) v))
+
+(defun* vector-nthcdr (n v)
+  (if (= n 0)
+      v
+      (vector-nthcdr (-i1 n) (vector-cdr v))))
+
 #+sbcl
 (map nil (lambda (x) (make-empty (sb-vm:saetp-specifier x)))
      sb-vm:*specialized-array-element-type-properties*)
