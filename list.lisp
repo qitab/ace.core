@@ -38,6 +38,7 @@
    #:length
    #:length=
    #:elements-eq
+   #:unordered-equal
    #:undot
    #:match
    #:copy-if #:copy-if-not
@@ -101,6 +102,18 @@ The function will also return true if the lists or their sub-lists compare EQ."
       ((eq l1 l2) t)
     (unless (eq (car l1) (car l2))
       (return nil))))
+
+(defun* unordered-equal (list1 list2 &key (test #'eql) (key #'identity))
+  "True if LIST1 and LIST2 are the same up to permutation of elements.
+KEY extracts a value to compare, and TEST determines how values are compared.
+TEST must be one of EQ, EQL, EQUAL, or EQUALP."
+  (declare (self inline (list list &key function function) boolean))
+  (let* ((size (+ (length list1) (length list2)))
+         (ht (make-hash-table :size size :test test)))
+    (dolist (e list1) (incf (gethash (funcall key e) ht 0)))
+    (dolist (e list2) (decf (gethash (funcall key e) ht 0)))
+    (loop :for count :being :each :hash-value :of ht
+          :always (zerop count))))
 
 (defun* undot (list)
   "Return LIST. If LIST is dotted,
