@@ -198,6 +198,19 @@
       (expect (equal '(1 2 3 4 5 6) a))
       (expect (= c 1)))))
 
+(defun %set-equal (a b)
+  (null (set-exclusive-or a b)))
+
+(deftest unionf-test ()
+  (let ((a (list 1 2)))
+    (expect (%set-equal '(1 2 3 4) (list:unionf a (list 1 3 4))))
+    (expect (%set-equal '(1 2 3 4) a))))
+
+(deftest interesctionf-test ()
+  (let ((a (list 1 2 3)))
+    (expect (%set-equal '(1 2) (list:intersectionf a (list 1 2 4))))
+    (expect (%set-equal '(1 2) a))))
+
 (deftest push*-test ()
   (let ((a (list 1 2 3)))
     (expect (equal '(4 5 6 1 2 3) (list:push* '(4 5 6) a)))

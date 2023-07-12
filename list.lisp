@@ -144,10 +144,12 @@ In this case (values T <sub-LIST1> <sub-LIST2>) are returned.
 (define-modify-macro nreversef () nreverse
   "Modify macro that reverses the first argument (PLACE) and assigns the result to it.")
 
-(define-modify-macro intersectionf (list1 list2 &rest args) union
-  "Modify macro that creates an intersection of LIST1 and LIST2 and sets it in place of LIST1.")
-(define-modify-macro unionf (list1 list2 &rest args) union
-  "Modify macro that creates a union of LIST1 and LIST2 and sets it in place of LIST1.")
+(define-modify-macro intersectionf (list2 &rest args) intersection
+  "Modify macro that creates an intersection of the first argument (PLACE) and LIST2
+ and assigns the result to PLACE.")
+(define-modify-macro unionf (list2 &rest args) union
+  "Modify macro that creates a union of the first argument (PLACE) and LIST2
+ and assigns the result to PLACE.")
 
 ;;;
 ;;; FIND(-*) and POSITION(-*) functions with implicit LIST type declaration.
