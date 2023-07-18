@@ -7,7 +7,7 @@
 ;; Package provides rudimentary OS related functionality.
 
 (defpackage :ace.core.os
-  (:use :cl :ace.core.defun)
+  (:use :ace.core.defun :cl)
   (:export
    #:getenv
    #:cwd

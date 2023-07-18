@@ -7,10 +7,10 @@
 ;;; Tests the macro utilities.
 
 (defpackage #:ace.core.once-only-test
-  (:use #:common-lisp
-        #:ace.core.macro
+  (:use #:ace.core.macro
         #:ace.core.once-only
-        #:ace.test)
+        #:ace.test
+        #:common-lisp)
   (:import-from #:ace.core.once-only
                 ace.core.once-only::generate-once-only-content))
 

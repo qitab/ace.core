@@ -71,10 +71,10 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.enum
-  (:use #:common-lisp
-        #:ace.core
+  (:use #:ace.core
+        #:ace.core.etc
         #:ace.core.macro
-        #:ace.core.etc)
+        #:common-lisp)
   (:use-alias #:ace.core.symbol)
   (:export #:define
            #:numeral

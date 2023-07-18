@@ -9,7 +9,7 @@
 ;;;;
 
 (defpackage #:ace.core.switch
-  (:use #:cl #:ace.core #:ace.core.macro)
+  (:use #:ace.core #:ace.core.macro #:cl)
   (:export #:switch #:eswitch #:switch*))
 
 (in-package #:ace.core.switch)

@@ -8,8 +8,8 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.atomic-test
-  (:use #:common-lisp
-        #:ace.test)
+  (:use #:ace.test
+        #:common-lisp)
   (:use-alias #:ace.core.atomic))
 
 (in-package :ace.core.atomic-test)

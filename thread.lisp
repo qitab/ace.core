@@ -11,12 +11,12 @@
 
 ;; TODO(czak): Change this package to be used as alias prefixed package.
 (defpackage #:ace.core.thread
-  (:use #:common-lisp
+  (:use #:ace.core
         #:ace.core.defun
-        #:ace.core
-        #:ace.core.macro
+        #:ace.core.etc
         #:ace.core.hook
-        #:ace.core.etc)
+        #:ace.core.macro
+        #:common-lisp)
   (:import-from #:bordeaux-threads
                 ;; make-thread is overridden.
                 #:thread

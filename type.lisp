@@ -11,7 +11,7 @@
 ;;;; TODO(czak): Unify the libraries across google3/lisp and travel/qpx.
 
 (defpackage #:ace.core.type
-  (:use #:cl #:ace.core)
+  (:use #:ace.core #:cl)
   #+sbcl (:import-from #:sb-cltl2 #:variable-information #:function-information)
   #+ccl (:import-from #:ccl #:variable-information #:function-information)
   #+allegro (:import-from #:sys #:variable-information #:function-information)

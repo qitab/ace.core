@@ -8,7 +8,7 @@
 ;;;
 
 (defpackage #:ace.core.enum-test
-  (:use #:cl #:ace.core.enum #:ace.test))
+  (:use #:ace.core.enum #:ace.test #:cl))
 
 (in-package #:ace.core.enum-test)
 

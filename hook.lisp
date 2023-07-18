@@ -18,7 +18,7 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.hook
-  (:use #:cl #:ace.core)
+  (:use #:ace.core #:cl)
   (:use-alias (#:mop #:closer-mop)
               #:ace.core.list)
   (:import-from #:ace.core.list #:unionf #:nreversef)

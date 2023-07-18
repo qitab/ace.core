@@ -8,10 +8,10 @@
 ;;;
 
 (defpackage #:ace.core.functional-test
-  (:use #:common-lisp
+  (:use #:ace.core
         #:ace.core.functional
-        #:ace.core
-        #:ace.test)
+        #:ace.test
+        #:common-lisp)
   (:import-from #:ace.core.functional
                 ace.core.functional::ftype-declaration
                 ace.core.functional::function-lambda-list

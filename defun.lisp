@@ -8,10 +8,10 @@
 ;;;
 
 (defpackage #:ace.core.defun
-  (:use #:cl
-        #:ace.core
+  (:use #:ace.core
         #:ace.core.macro
-        #:ace.core.type)
+        #:ace.core.type
+        #:cl)
   (:export #:defun* #:self #:foldable #:known))
 
 (in-package #:ace.core.defun)

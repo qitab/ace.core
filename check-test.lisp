@@ -9,10 +9,10 @@
 ;;; cllint: disable=invalid-assert
 
 (defpackage #:ace.core.check-test
-  (:use #:common-lisp
-        #:ace.core.check
+  (:use #:ace.core.check
         #:ace.core.defun
-        #:ace.test)
+        #:ace.test
+        #:common-lisp)
   (:import-from #:ace.test.runner #:*failed-conditions*))
 
 (in-package #:ace.core.check-test)

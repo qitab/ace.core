@@ -9,9 +9,9 @@
 ;;;;
 
 (defpackage #:ace.core.switch-test
-  (:use #:common-lisp
-        #:ace.core.switch
-        #:ace.test))
+  (:use #:ace.core.switch
+        #:ace.test
+        #:common-lisp))
 
 (in-package :ace.core.switch-test)
 

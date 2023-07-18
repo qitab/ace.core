@@ -7,9 +7,9 @@
 ;;; Useful abstractions for the file system.
 
 (defpackage #:ace.core.io
-  (:use #:common-lisp
-        #:ace.core.defun
-        #:ace.core.os)
+  (:use #:ace.core.defun
+        #:ace.core.os
+        #:common-lisp)
   (:export
    #:absolute-pathname-p
    #:directory-pathname-p

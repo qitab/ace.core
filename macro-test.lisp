@@ -8,9 +8,9 @@
 ;;;
 
 (defpackage #:ace.core.macro-test
-  (:use #:common-lisp
-        #:ace.core.macro
-        #:ace.test))
+  (:use #:ace.core.macro
+        #:ace.test
+        #:common-lisp))
 
 (in-package :ace.core.macro-test)
 

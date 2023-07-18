@@ -7,10 +7,10 @@
 ;;; Test for #:ace.core.io.
 
 (defpackage #:ace.core.io-test
-  (:use #:common-lisp
-        #:ace.core.io
+  (:use #:ace.core.io
         #:ace.core.os
-        #:ace.test)
+        #:ace.test
+        #:common-lisp)
   (:import-from #:ace.core.io #:*temporary-directory*))
 
 (in-package #:ace.core.io-test)

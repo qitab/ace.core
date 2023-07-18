@@ -25,8 +25,9 @@
    #:missed*))
 
 (defpackage #:ace.core.check
-  (:use #:common-lisp #:ace.core
-        #:ace.core.check.condition)
+  (:use #:ace.core
+        #:ace.core.check.condition
+        #:common-lisp)
   (:import-from #:ace.core.macro
                 ace.core.macro:strcat
                 ace.core.macro:current-file-namestring

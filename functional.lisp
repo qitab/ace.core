@@ -8,10 +8,11 @@
 ;;;
 
 (defpackage #:ace.core.functional
-  (:use #:common-lisp
-        #:ace.core #:ace.core.macro
+  (:use #:ace.core
+        #:ace.core.macro
         #:ace.core.once-only
-        #:ace.core.simplify)
+        #:ace.core.simplify
+        #:common-lisp)
   #+sbcl (:import-from #:sb-cltl2 #:function-information)
   (:export #:∘
            ;; Deprecated, use the shorter version: ∘.

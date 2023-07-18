@@ -9,10 +9,10 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.list
-  (:use #:common-lisp
-        #:ace.core.once-only
+  (:use #:ace.core.collect
         #:ace.core.defun
-        #:ace.core.collect)
+        #:ace.core.once-only
+        #:common-lisp)
   (:import-from #:ace.core.macro
                 ace.core.macro:find-type-declaration
                 ace.core.macro:with-gensyms
@@ -21,19 +21,19 @@
                 ace.core.macro:gensym*
                 ace.core.macro:gensymp
                 ace.core.macro:eval-always)
-  (:shadow cl:find
+  (:shadow cl:delete
+           cl:delete-if
+           cl:delete-if-not
+           cl:find
            cl:find-if
            cl:find-if-not
+           cl:length
            cl:position
            cl:position-if
            cl:position-if-not
            cl:remove
            cl:remove-if
-           cl:remove-if-not
-           cl:delete
-           cl:delete-if
-           cl:delete-if-not
-           cl:length)
+           cl:remove-if-not)
   (:export
    #:length
    #:length=

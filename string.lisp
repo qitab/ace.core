@@ -12,9 +12,9 @@
 ;;; TODO(czak): Unify the libraries across google3/lisp and travel/qpx.
 
 (defpackage #:ace.core.string
-  (:use #:common-lisp
-        #:ace.core.defun
-        #:ace.core.once-only)
+  (:use #:ace.core.defun
+        #:ace.core.once-only
+        #:common-lisp)
   (:import-from #:ace.core.check #:dcheck #:check #:expect)
   (:import-from #:ace.core.macro
                 #:with-gensyms

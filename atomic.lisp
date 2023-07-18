@@ -15,10 +15,10 @@
 ;;; TODO(czak): Replace stuff in //lisp/parallel:atomic
 
 (defpackage #:ace.core.atomic
-  (:use #:cl
-        #:ace.core
+  (:use #:ace.core
         #:ace.core.defun
-        #:ace.core.macro)
+        #:ace.core.macro
+        #:cl)
   #+sbcl
   (:import-from #:sb-thread
                 sb-thread:barrier)
@@ -35,8 +35,8 @@
   #+sbcl
   (:import-from #:sb-kernel
                 sb-kernel:check-bound)
-  (:shadow cl:incf
-           cl:decf
+  (:shadow cl:decf
+           cl:incf
            cl:pop
            cl:push)
   (:export #:incf

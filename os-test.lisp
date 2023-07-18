@@ -7,9 +7,9 @@
 ;;; Test for #:ace.core.os.
 
 (defpackage #:ace.core.os-test
-  (:use #:common-lisp
-        #:ace.core.os
-        #:ace.test))
+  (:use #:ace.core.os
+        #:ace.test
+        #:common-lisp))
 
 (in-package #:ace.core.os-test)
 

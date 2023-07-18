@@ -9,9 +9,9 @@
 ;;;;
 
 (defpackage #:ace.core.thread-test
-  (:use #:common-lisp
-        #:ace.core.thread
-        #:ace.test)
+  (:use #:ace.core.thread
+        #:ace.test
+        #:common-lisp)
   (:import-from #:ace.core.thread
                 ace.core.thread::holding-mutex-p)
   (:import-from #:sb-ext

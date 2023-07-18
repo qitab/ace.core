@@ -12,7 +12,7 @@
 ;;; TODO(czak): Unify the libraries across google3/lisp and travel/qpx.
 
 (defpackage #:ace.core.symbol
-  (:use #:cl #:ace.core)
+  (:use #:ace.core #:cl)
   (:shadow #:format)
   (:export
    #:cat

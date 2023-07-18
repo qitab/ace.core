@@ -8,9 +8,9 @@
 ;;;
 
 (defpackage #:ace.core.with
-  (:use #:cl
-        #:ace.core
-        #:ace.core.macro)
+  (:use #:ace.core
+        #:ace.core.macro
+        #:cl)
   (:export
    #:with
    #:defcleanup))

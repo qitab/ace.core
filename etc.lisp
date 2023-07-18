@@ -8,10 +8,10 @@
 ;;;
 
 (defpackage #:ace.core.etc
-  (:use #:common-lisp
-        #:ace.core
+  (:use #:ace.core
         #:ace.core.macro
-        #:ace.core.once-only)
+        #:ace.core.once-only
+        #:common-lisp)
   (:import-from #:ace.core.type #:variable-information)
   (:export
    #:one-of

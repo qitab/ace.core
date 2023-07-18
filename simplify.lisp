@@ -7,7 +7,7 @@
 ;;; The package allows to simplify Lisp forms in macros.
 
 (defpackage #:ace.core.simplify
-  (:use #:cl #:ace.core.macro)
+  (:use #:ace.core.macro #:cl)
   (:export #:simplify))
 
 (in-package #:ace.core.simplify)

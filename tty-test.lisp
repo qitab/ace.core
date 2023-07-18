@@ -9,7 +9,7 @@
 ;;;
 
 (defpackage #:ace.core.tty-test
-  (:use #:common-lisp #:ace.test #:ace.core.tty))
+  (:use #:ace.core.tty #:ace.test #:common-lisp))
 
 (in-package #:ace.core.tty-test)
 

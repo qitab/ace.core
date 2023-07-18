@@ -11,7 +11,7 @@
 ;;;
 
 (defpackage #:ace.core.fast-ops-test
-  (:use #:cl #:ace.test #:ace.core.fast-ops)
+  (:use #:ace.core.fast-ops #:ace.test #:cl)
   (:import-from #:ace.core.fast-ops
                 ace.core.fast-ops::%dostack))
 

@@ -10,7 +10,7 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.vector
-  (:use #:cl #:ace.core)
+  (:use #:ace.core #:cl)
   #+sbcl
   (:import-from #:sb-ext sb-ext:word)
   (:export

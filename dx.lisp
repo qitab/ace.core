@@ -8,7 +8,7 @@
 ;;;
 
 (defpackage #:ace.core.dx
-  (:use :cl :ace.core #:ace.core.macro)
+  (:use #:ace.core.macro :ace.core :cl)
   (:shadow
    cl:flet cl:labels cl:let cl:let*)
   (:export

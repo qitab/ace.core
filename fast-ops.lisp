@@ -11,7 +11,7 @@
 ;;; TODO(czak): Implement portable modular arithmetic.
 
 (defpackage #:ace.core.fast-ops
-  (:use #:common-lisp #:ace.core.defun)
+  (:use #:ace.core.defun #:common-lisp)
   #+sbcl
   (:import-from sb-c sb-c::mask-signed-field)
   (:export #:define-typed-integer-math-functions

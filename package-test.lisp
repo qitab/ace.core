@@ -19,9 +19,9 @@
     (:use #:common-lisp))
 
 (ace.core:defpackage* #:ace.core.package-test
-  (:use #:common-lisp
+  (:use #:ace.core.package
         #:ace.test
-        #:ace.core.package)
+        #:common-lisp)
   (:use-alias (#:foo #:ace.test)
               (#:bar #:ace.test)
               ;; Shortcut for (#:quaz #:ace.core.package-test.quaz)

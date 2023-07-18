@@ -9,9 +9,9 @@
 ;;;;
 
 (defpackage #:ace.core.number-test
-  (:use #:common-lisp
-        #:ace.core.number
-        #:ace.test))
+  (:use #:ace.core.number
+        #:ace.test
+        #:common-lisp))
 
 (in-package #:ace.core.number-test)
 

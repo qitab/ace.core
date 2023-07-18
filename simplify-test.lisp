@@ -8,9 +8,9 @@
 ;;;
 
 (defpackage #:ace.core.simplify-test
-  (:use #:common-lisp
-        #:ace.core.simplify
-        #:ace.test)
+  (:use #:ace.core.simplify
+        #:ace.test
+        #:common-lisp)
   (:import-from
    #:ace.core.simplify
    ace.core.simplify::folded-form))

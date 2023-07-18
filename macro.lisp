@@ -23,7 +23,7 @@
 ;;;
 
 (defpackage #:ace.core.macro
-  (:use #:cl #:ace.core)
+  (:use #:ace.core #:cl)
   (:export
    #:1st-or-atom
    #:2nd-or-atom

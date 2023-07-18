@@ -8,7 +8,7 @@
 ;;;
 
 (defpackage #:ace.core.once-only
-  (:use #:cl #:ace.core.macro)
+  (:use #:ace.core.macro #:cl)
   (:export
    #:define-compiler-macro*
    #:once-only))

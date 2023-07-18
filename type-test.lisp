@@ -9,10 +9,10 @@
 ;;;;
 
 (defpackage #:ace.core.type-test
-  (:use #:common-lisp
-        #:ace.core
+  (:use #:ace.core
         #:ace.core.type
-        #:ace.test))
+        #:ace.test
+        #:common-lisp))
 
 (in-package :ace.core.type-test)
 

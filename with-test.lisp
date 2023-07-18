@@ -7,10 +7,10 @@
 ;;; Test for #:ace.core.with.
 
 (defpackage #:ace.core.with-test
-  (:use #:cl
-        #:ace.core
+  (:use #:ace.core
         #:ace.core.with
-        #:ace.test))
+        #:ace.test
+        #:cl))
 
 (in-package #:ace.core.with-test)
 

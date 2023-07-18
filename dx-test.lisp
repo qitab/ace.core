@@ -8,8 +8,8 @@
 ;;;
 
 (ace.core:defpackage* #:ace.core.dx-test
-  (:use #:common-lisp
-        #:ace.test)
+  (:use #:ace.test
+        #:common-lisp)
   (:use-alias #:ace.core.dx))
 
 (in-package :ace.core.dx-test)
