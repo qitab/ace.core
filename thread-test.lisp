@@ -151,3 +151,50 @@
   (let ((c (cons 1 2)))
     (declare (dynamic-extent c))
     (expect (stack-allocated-p c))))
+
+(defvar *always-heap-p-stream* t)
+;;; Prior to putting WITHOUT-ARENA into (BACKTRACES) it could have crashed due to
+;;; cross-arena pointers depending on whether each interrupted thread and the
+;;; interruptor were using arenas.
+#+sbcl
+(deftest backtrace-string-not-to-arena ()
+  ;; It doesn't matter when this ENCAPSULATE happens (if tests execute
+  ;; concurrently) because it's a safe change to make to the function.
+  (sb-int:encapsulate 'ace.core.thread::print-backtrace 'arena-sanitizer
+    (lambda (realfun &key (stream *debug-io*))
+      ;; A failing ASSERT inside backtrace is pretty bad. Don't do that-
+      ;; just set a flag saying the test failed
+      (unless (sb-ext:heap-allocated-p stream)
+        (setf *always-heap-p-stream* nil))
+      (apply realfun :stream stream)))
+  (let ((runflag t))
+    (labels ((get-deeply-in-stack (levels)
+               ;; Recurse so that there are a bunch of frames to print, the idea
+               ;; being to force the string-stream buffer to grow.
+               (cond ((plusp levels)
+                      (get-deeply-in-stack (1- levels))
+                      (sleep (random .00001))) ; so not a tail call
+                     (t
+                      (print 'foo (make-broadcast-stream)))))
+             (use-arena-and-start (&rest args)
+               ;; Can't switch from arena to arena, so get out of the main arena
+               ;; that was inherited from the creating thread
+               (sb-vm:unuse-arena)
+               (let ((arena (sb-vm:new-arena (* 1024 1024 10)))) ; 10 MiB
+                 (loop while runflag
+                       do (sb-vm:with-arena (arena)
+                            (apply #'get-deeply-in-stack args))
+                          (sb-vm:rewind-arena arena)))))
+    (let ((main-arena (sb-vm:new-arena (* 1024 1024 10)))) ; 10 MiB
+      (sb-vm:with-arena (main-arena)
+        (let* ((nthreads 5)
+               (threads (loop repeat nthreads for id from 0
+                              collect (sb-thread:make-thread
+                                       #'use-arena-and-start
+                                       :arguments (list 40)
+                                       :name (format nil "worker ~d" id)))))
+          (dotimes (i 10)
+            (ace.core.thread:backtraces))
+          (setq runflag nil)
+          (mapc 'sb-thread:join-thread threads))))))
+  (expect *always-heap-p-stream*))
