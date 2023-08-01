@@ -363,10 +363,10 @@
 (defmacro defun* (&environment env name args &rest body)
   "Defines a function in a way similar to the defun macro.
 
-This macro interprets a special 'self' declaration. If it is present in the declarations'
+This macro interprets a special `SELF' declaration. If it is present in the declarations'
 section of the body, the contents are used to declare the function type.
 
-The self declaration has the following syntax:
+The SELF declaration has the following syntax:
 (declare (self [inline | notinline] [foldable] [known]
                [([arg-type | lambda-list-keyword]*) return-value-type*]))
 
@@ -399,6 +399,10 @@ positional ones.
 
 Alternative syntax allows to define an inline function by putting
 INLINE after the DEFUN* and before the function name.
+
+A default block with the name `SELF' is inserted around the body,
+which allows `(return-from SELF <args>)` to be called from inside the body
+to return from the function.
 
 Parameters:
   NAME - the symbol name of the function. The macro may also generate a %NAME internal function.
@@ -487,23 +491,24 @@ Examples:
           (finfo-known finfo) (and known t)
           (finfo-values finfo) values)
 
-    (if (or inline-indicator    ; never split inline / notinline code
-            unusual-name-p      ; only standard functions and setters are split
-            (not (finfo-keyword finfo)) ; only keyworded functions are split
-            (finfo-rest finfo)) ; except where the function needs a &rest list.
+    (with-split-body (body declarations docs)
+      (declare (list body declarations docs))
+      (if (or inline-indicator    ; never split inline / notinline code
+              unusual-name-p      ; only standard functions and setters are split
+              (not (finfo-keyword finfo)) ; only keyworded functions are split
+              (finfo-rest finfo)) ; except where the function needs a &rest list.
 
-        `(progn
-           ,@(make-ftype-declaration! finfo :inline inline-indicator)
+          `(progn
+             ,@(make-ftype-declaration! finfo :inline inline-indicator)
 
-           (,def ,name ,args
-            ,@(make-inside-type-declaration! (finfo-all-parameters finfo :restp nil :auxp t))
-            ,@(remove-declarations 'self body))
-           ,@debug
-           ',name)
+             (,def ,name ,args ,@docs
+               ,@(make-inside-type-declaration! (finfo-all-parameters finfo :restp nil :auxp t))
+               ,@(remove-declarations 'self declarations)
+               (block self ,@body))
+             ,@debug
+             ',name)
 
-        ;; Else this is an optimized build and the function has keyword parameters.
-        (with-split-body (body declarations docs)
-          (declare (list body declarations docs))
+          ;; Else this is an optimized build and the function has keyword parameters.
           (let* ((%declarations (remove-declarations 'self declarations))
                  (name-symbol (the symbol (if setfp (second name) name)))
                  (%name-symbol (intern (format nil "%~A" name-symbol)
@@ -543,6 +548,6 @@ Examples:
                       (finfo-all-parameters finfo :restp nil :auxp t)
                       :suppliedp t)
                    ,@%declarations
-                   (block ,name-symbol ,@body))
+                   (block self (block ,name-symbol ,@body)))
 
                  ',name)))))))

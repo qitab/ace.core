@@ -671,3 +671,19 @@
     (expect (eql (setf (struct1-a s :default 1) 2) 2))
     (expect (eql (setf (struct1-a s :default 1) nil) 1))
     (expect (eql (struct1-a s) nil))))
+
+(defun* self-block-test-fun ()
+  "Tests if we return expected value from this function."
+  (declare (self () keyword))
+  (return-from self :it-works)
+  :all-things-great-must-come-to-an-end)
+
+(defun* self-block-test-fun2 (a &key (b -1))
+  "Tests if we return expected value from this function."
+  (declare (self (fixnum &key fixnum) t))
+  (return-from self (+ a b))
+  :all-things-great-must-come-to-an-end)
+
+(deftest test-self-block ()
+  (expect (eq (self-block-test-fun) :it-works))
+  (expect (eq (self-block-test-fun2 1) 0)))
