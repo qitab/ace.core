@@ -667,7 +667,7 @@ Parameters:
 
 (defun* emptyp (string)
   "True if STRING is empty."
-  (declare (self foldable inline (string) boolean))
+  (declare (self foldable inline ((or null string)) boolean))
   (zerop (the size (length string))))
 
 (defun* search-replace (old new string &key (start 0) (end nil) (test #'char=))
