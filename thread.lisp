@@ -464,8 +464,8 @@ there is still possibility that the MUTEX remains locked resulting in an undefin
  INTERRUPT-THREAD - is the function used to interrupt threads."
   (let* ((threads (all-threads))
          (current-thread (current-thread))
-         (streams (#+sbcl sb-vm:without-arena
-                   #-sbcl progn
+         (streams (#+(and sbcl arena-allocator) sb-vm:without-arena
+                   #-(and sbcl arena-allocator) progn
                     (loop for p in threads collect (cons (make-string-output-stream) 1)))))
     (loop for thread in threads
           for cell in streams

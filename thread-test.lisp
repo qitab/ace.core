@@ -156,7 +156,7 @@
 ;;; Prior to putting WITHOUT-ARENA into (BACKTRACES) it could have crashed due to
 ;;; cross-arena pointers depending on whether each interrupted thread and the
 ;;; interruptor were using arenas.
-#+sbcl
+#+(and sbcl arena-allocator)
 (deftest backtrace-string-not-to-arena ()
   ;; It doesn't matter when this ENCAPSULATE happens (if tests execute
   ;; concurrently) because it's a safe change to make to the function.
