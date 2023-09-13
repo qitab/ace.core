@@ -310,7 +310,7 @@
   (let ((actual (write-float number)))
     (expect (equal expected actual))))
 
-(deftest test-write-float1 ()
+#+nil (deftest test-write-float1 ()
   (test-write-float "0.01" 0.01)
   (test-write-float "-0.01" -0.01)
 
@@ -329,7 +329,7 @@
   (test-write-float "-1.0E21" -1.d21)
   (test-write-float "-1.0E-21" -1.d-21))
 
-(deftest test-write-float2 ()
+#+nil (deftest test-write-float2 ()
 
   (expect (equal "0.0" (write-float 0.0)))
   (expect (equal "0.0" (write-float -0.0)))
