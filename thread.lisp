@@ -398,8 +398,9 @@ This version will only return the first value of BODY."
              until (= ,%count (progn (barrier (:read)) (frmutex-pre-count ,fast-read-mutex)))
              finally (return ,%result)))))
 
+#+sbcl
 (defmacro with-frmutex-write ((fast-read-mutex
-                               &key (lock t) (reenter t) (protect t))
+                               &key (lock t) (reenter t))
                               &environment env &body body)
   "Executes BODY forms locking the FAST-READ-MUTEX for writing.
 The mutex is locked if the LOCK form evaluates to non-nil at runtime.
@@ -407,17 +408,11 @@ The locking is done only for the other writers,
 while the readers do busy waiting with reevaluation.
 
 The following options are evaluated at compile-time only:
-If REENTER is NIL and the MUTEX is owned by the current thread, a MUTEX-ERROR is signaled.
-If PROTECT is NIL, the mutex is released without the safety of UNWIND-PROTECT.
-Note that PROTECT equal NIL, does not even protect from interrupts,
-so even if the code surrounded by the WITH-MUTEX form never exits non-locally,
-there is still possibility that the MUTEX remains locked resulting in an undefined state."
+If REENTER is NIL and the MUTEX is owned by the current thread, a MUTEX-ERROR is signaled."
   (check-type reenter boolean)
-  (check-type protect boolean)
   (once-only (fast-read-mutex lock)
-    (if protect
-        (with-gensyms (%mutex %got-it)
-          `(without-interrupts
+    (with-gensyms (%mutex %got-it)
+      `(without-interrupts
              (let ((,%got-it nil)
                    (,%mutex (frmutex-mutex ,fast-read-mutex)))
                (unwind-protect
@@ -430,22 +425,13 @@ there is still possibility that the MUTEX remains locked resulting in an undefin
                                  ((plusp (safety-level env))
                                   `((or (not (holding-mutex-p ,%mutex))
                                         (error 'mutex-error "Cannot lock ~A again." ,%mutex)))))
-                         (allow-with-interrupts (acquire-lock ,%mutex))))
+                         (allow-with-interrupts (sb-thread:grab-mutex ,%mutex))))
                    (atomic-incf (frmutex-pre-count ,fast-read-mutex))
                    (barrier (:write))
                    (with-local-interrupts ,@body))
                  (barrier (:write))
                  (atomic-incf (frmutex-post-count ,fast-read-mutex))
-                 (when ,%got-it (release-lock ,%mutex))))))
-        ;; Unprotected
-        `(multiple-value-prog1
-             (with-unprotected-mutex ((frmutex-mutex ,fast-read-mutex)
-                                      :lock ,lock :reenter ,reenter)
-               (atomic-incf (frmutex-pre-count ,fast-read-mutex))
-               (barrier (:write))
-               (locally ,@body))
-           (barrier (:write))
-           (atomic-incf (frmutex-post-count ,fast-read-mutex))))))
+                 (when ,%got-it (sb-thread:release-mutex ,%mutex))))))))
 ;;;
 ;;; Backtraces
 ;;;
