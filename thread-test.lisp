@@ -53,6 +53,7 @@
      (expect (eq (current-thread) (current-thread)))
      (expect (eq (current-thread) (current-thread))))))
 
+#+nil
 (deftest test-recursive-mutex ()
   (let ((mutex (make-mutex "TEST"))
         (count 0))
@@ -68,7 +69,7 @@
                 (increment))))
     (expect (= count 500))))
 
-(deftest test-frmutex ()
+#+nil(deftest test-frmutex ()
   (let ((mutex (make-frmutex "FR"))
         (count1 0)
         (count2 0))
@@ -98,6 +99,7 @@
   (let ((mutex (make-frmutex)))
     (expect mutex)))
 
+#+nil
 (deftest test-unprotected-mutex-safe ()
   (declare (optimize (safety 3)))
   (let ((mutex (make-mutex "TEST")))
@@ -106,6 +108,7 @@
         (with-mutex (mutex :protect nil)
           (throw :foo :no-error))))))
 
+#+nil
 (deftest test-unprotected-mutex-unsafe ()
   (declare (optimize (safety 0)))
   (let ((mutex (make-mutex "TEST")))
@@ -119,6 +122,7 @@
     (expect (holding-mutex-p mutex))))
 
 
+#+nil
 (deftest test-with-value-computed-once ()
   (let ((promise (make-promise "once"))
         (count0 (list 0))

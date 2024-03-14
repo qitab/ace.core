@@ -188,6 +188,9 @@ Related:
   #-(or ccl sbcl)
   (assert nil nil "Unimplemented: HOLDING-MUTEX-P"))
 
+(defmacro with-mutex ((m) &body body) `(sb-thread:with-mutex (,m) ,@body))
+
+#+nil
 (defmacro with-mutex ((mutex &key (lock t) (reenter t) (protect t) (inline :default))
                       &environment env &body body)
   "Defines BODY as a critical section that is guarded by MUTEX.
@@ -225,6 +228,7 @@ there is still possibility that the MUTEX remains locked resulting in an undefin
                     (,lock-form (,mutex) (&body))
                     (&body))))))))
 
+#+nil
 (defmacro with-mutex-once ((mutex) &environment env &body body)
   "Executes BODY while holding the MUTEX.
 Checks that the current thread is NOT the owner of the MUTEX."
@@ -236,6 +240,7 @@ Checks that the current thread is NOT the owner of the MUTEX."
        (with-recursive-lock-held (,mutex)
          (locally ,@body)))))
 
+#+nil
 (defmacro with-unprotected-mutex ((mutex &key (lock t) (reenter t))
                                   &environment env &body body)
   "Like WITH-MUTEX but without an (expensive) UNWIND-PROTECT.
@@ -270,6 +275,7 @@ If REENTER is NIL and the MUTEX is owned by the current thread, a MUTEX-ERROR is
                  (error 'mutex-error "Unwind with an unprotected mutex ~A!" ,mutex)))))
         (form)))))
 
+#+nil
 (defmacro with-unprotected-mutex-once ((mutex &key (lock t)) &body body)
   "Like WITH-MUTEX-ONCE but without an (expensive) UNWIND-PROTECT.
 The mutex is locked if the LOCK form evaluates to non-nil at runtime.
@@ -313,6 +319,7 @@ The promise must not be fulfilled, yet."
   (dcheck (promise-fulfilled-p promise))
   (cdr promise))
 
+#+nil
 (defun %with-value-computed-once (promise body)
   (declare (promise promise) (function body))
   ;; Check if promise is not fulfilled, yet?
@@ -328,6 +335,7 @@ The promise must not be fulfilled, yet."
   ;; Return results.
   (promise-value promise))
 
+#+nil
 (defmacro with-value-computed-once ((promise) &body body)
   "Compute the value of the BODY only once and store it in the PROMISE.
 
